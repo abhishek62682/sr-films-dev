@@ -1,0 +1,14 @@
+
+
+
+body {
+    background-color: var(--col-dark-red);
+}
+
+
+
+
+:root{
+    --col-dark-red:#8c2923;
+    
+}

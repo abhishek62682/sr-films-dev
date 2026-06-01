@@ -1,0 +1,61 @@
+.testimonial-swiper{
+    width:100%;
+}
+
+    
+@keyframes scroll-infinite {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll-infinite {
+    animation: scroll-infinite 20s linear infinite;
+  }
+
+  .gallery-wrapper:hover .gallery-track {
+    animation-play-state: paused;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+      
+
+      ::selection {
+        color: #faf5eb;
+        background-color: #8c2923;
+      }
+
+
+  .top-frame{
+    rotate: 180deg;
+    transform-origin: center;
+  }
+
+
+  /* Swiper pagination — unavoidable, Swiper generates these classes internally */
+  #services-section .swiper-pagination-bullet {
+    background: #faf5eb66 !important;
+    opacity: 1 !important;
+    width: 6px !important;
+    height: 6px !important;
+  }
+  #services-section .swiper-pagination-bullet-active {
+    background: #faf5eb !important;
+    width: 18px !important;
+    border-radius: 100px !important;
+  }
+  /* Arrow diagonal — translate values not supported in Tailwind JIT without config */
+  .arrow-out { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease; transform: translate(0,0); opacity: 1; }
+  .group:hover .arrow-out { transform: translate(-6px, 6px); opacity: 0; }
+  .arrow-in { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease; transform: translate(6px,-6px); opacity: 0; }
+  .group:hover .arrow-in { transform: translate(0,0); opacity: 1; }
