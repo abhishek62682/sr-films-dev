@@ -6,35 +6,35 @@
   document.addEventListener('DOMContentLoaded', function() {
 
     /* Portfolio Carousel   */
-    const filmsSwiper = new Swiper('.filmsSwiper', {
-      loop: true,
+   const filmsSwiper = new Swiper('.filmsSwiper', {
+  slidesPerView: 1,
+  spaceBetween: 16,
+  speed: 600,
+
+  breakpoints: {
+    0: {
       slidesPerView: 1,
       spaceBetween: 16,
-      autoplay: false,
-      speed: 600,
-      breakpoints: {
-        640: {
-          slidesPerView: 1,
-          spaceBetween: 16,
-        },
-        768: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-        },
-        1024: {
-          slidesPerView: 2.2,
-          spaceBetween: 24,
-        },
-        1280: {
-          slidesPerView: 2.5,
-          spaceBetween: 24,
-        },
-      },
-      navigation: {
-        nextEl: '.films-next',
-        prevEl: '.films-prev',
-      },
-    });
+    },
+    768: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    1024: {
+      slidesPerView: 2.2,
+      spaceBetween: 24,
+    },
+    1280: {
+      slidesPerView: 2.5,
+      spaceBetween: 24,
+    },
+  },
+
+  navigation: {
+    nextEl: '.films-next',
+    prevEl: '.films-prev',
+  },
+});
 
 
 
