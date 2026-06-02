@@ -4,714 +4,376 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HOME | SR FILM PHOTOGRAPHY</title>
-    <link rel="stylesheet" href="index.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
-
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Swiper CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/lucide@1.17.0/dist/umd/lucide.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="./assets/css/index.css" />
+
     <style type="text/tailwindcss">
       @theme {
-        --color-dark-red: #8c2923;
-        --color-cream: #faf5eb;
-        --color-cblack: #14131399;
-        --color-grey: #14131366;
+        /* ─── Brand Colors ─── */
+        --color-brand:        #8c2923;
+        --color-brand-dark:   #6b1f1a;
+        --color-brand-deep:   #4f1614;
+        --color-surface:      #faf5eb;
+        --color-surface-dim:  #f0ebe3;
+        --color-ink:          #141313;
+        --color-ink-muted:    #14131399;
+        --color-ink-faint:    #14131366;
+        --color-cream-ghost:  #faf5eb99;
+        --color-cream-faint:  #faf5eb66;
+        --color-cream-whisper:#faf5eb1a;
 
-        --font-primary: "Hedvig Letters Sans", sans-serif;
+        /* ─── Legacy aliases (keep existing classes working) ─── */
+        --color-dark-red:     #8c2923;
+        --color-cream:        #faf5eb;
+        --color-cblack:       #14131399;
+        --color-grey:         #14131366;
+
+        /* ─── Typography ─── */
+        --font-primary:   "Hedvig Letters Sans", sans-serif;
         --font-secondary: "Instrument Serif", serif;
 
-        --text-xsm: 12px;
+        /* ─── Type Scale ─── */
+        --text-xsm:    12px;
+        --text-sm:     14px;
+        --text-md:     16px;
+        --text-lg:     20px;
+        --text-xl:     28px;
+        --text-2xl:    36px;
+        --text-3xl:    48px;
+        --text-large:  32px;
+        --text-xlarge: 100px;
 
-        --text-sm: 14px;
-        --text-md: 16px;
-        --leading-md: 19px;
-        --leading-sm: 16px;
-        --text-large: 32px;
-        --leading-large: 32px;
+        /* ─── Leading ─── */
+        --leading-xsm:    14px;
+        --leading-sm:     16px;
+        --leading-md:     19px;
+        --leading-lg:     24px;
+        --leading-xl:     32px;
+        --leading-large:  32px;
+        --leading-xlarge: 100px;
 
-        --text-xlarge: 120px;
-        --leading-xlarge: 115px;
+        /* ─── Spacing tokens ─── */
+        --spacing-section-y:    80px;
+        --spacing-section-y-sm: 48px;
+        --spacing-section-x:    32px;
+        --spacing-section-x-sm: 16px;
+        --spacing-gap:          24px;
+        --spacing-gap-sm:       16px;
+
+        /* ─── Radius ─── */
+        --radius-card:    6px;
+        --radius-pill:    100px;
+        --radius-sm:      4px;
+        --radius-md:      8px;
+        --radius-lg:      12px;
+        --radius-xl:      20px;
+
+        /* ─── Shadow ─── */
+        --shadow-soft: 0 4px 24px rgba(20,19,19,0.08);
+        --shadow-card: 0 2px 12px rgba(20,19,19,0.06);
+      }
+    </style>
+
+    <style>
+      :root { --speed: 4.2s; }
+
+      /* ── LOADER ── */
+      .loader-wrapper {
+        display: flex; align-items: center; justify-content: center;
+        gap: 30px; background-color: #8c2923;
+        width: 100%; height: 100vh;
+        z-index: 99999999999; position: fixed; top: 0; left: 0;
+      }
+      .loader {
+        width: 120px; aspect-ratio: 1/1; position: relative;
+        container-type: size; scale: 1 -1; transform-style: preserve-3d;
+      }
+      .loader span {
+        width: 90%; aspect-ratio: 10/2.25; position: absolute;
+        top: 0%; left: 50%; translate: -50% 0%; border-radius: 50%;
+        background: #f2f2f2; border: 1px solid #2a2a2a; scale: 0.25;
+        animation:
+          travel var(--speed) calc((-1 * var(--speed)) * (var(--idx) / 10)) infinite linear,
+          scale calc(var(--speed) * 0.5) calc((-1 * var(--speed)) * (var(--idx) / 10)) infinite alternate;
+      }
+      @keyframes scale {
+        0% { opacity: 0; }
+        15%, 25% { opacity: 1; }
+        100% { opacity: 1; scale: 1; }
+      }
+      @keyframes travel {
+        0%, 5% { transform: translate3d(0,0,0); translate: -50% -5%; }
+        95%, 100% { transform: translate3d(0,0,10px); translate: -50% calc(100cqb - 95%); }
+      }
+
+      /* ── GALLERY SCROLL ── */
+      @keyframes scroll-infinite {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .gallery-track { animation: scroll-infinite 10s linear infinite; }
+
+      /* ── SECTION LABEL / TAG ── */
+      .section-tag {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-bottom: 16px;
+      }
+      .section-tag .dot {
+        display: inline-block; width: 5px; height: 5px;
+        border-radius: 50%; flex-shrink: 0;
+      }
+      .section-tag span {
+        font-family: var(--font-primary); font-size: 12px;
+        letter-spacing: 0.2em; text-transform: uppercase;
       }
     </style>
   </head>
 
   <body>
 
+    <!-- ══════════════════════════════════════════
+         LOADER
+    ══════════════════════════════════════════ -->
+    <div class="loader-wrapper" aria-hidden="true">
+      <div class="loader">
+        <span style="--idx:0"></span><span style="--idx:1"></span>
+        <span style="--idx:2"></span><span style="--idx:3"></span>
+        <span style="--idx:4"></span><span style="--idx:5"></span>
+        <span style="--idx:6"></span><span style="--idx:7"></span>
+        <span style="--idx:8"></span><span style="--idx:9"></span>
+      </div>
+    </div>
 
-    <style>:root {
-  --speed: 4.2s;
-}
-
-
-
-
-
-
-/* LOADER */
-.loader-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  background-color: #8c2923;
-  width:100%;
-  height:100vh;
-  z-index: 99999999999;
-  position: fixed;
-  top:0;
-  left:0;
-}
-
-.loader {
-  width: 120px;
-  aspect-ratio: 1 / 1;
-  position: relative;
-  container-type: size;
-  scale: 1 -1;
-  transform-style: preserve-3d;
-}
-
-.loader span {
-  width: 90%;
-  aspect-ratio: 10 / 2.25;
-  position: absolute;
-  top: 0%;
-  left: 50%;
-  translate: -50% 0%;
-  border-radius: 50%;
-  background: #f2f2f2;
-  border: 1px solid #2a2a2a;
-  scale: 0.25;
-
-  animation:
-    travel var(--speed) calc((-1 * var(--speed)) * (var(--idx) / 10)) infinite linear,
-    scale calc(var(--speed) * 0.5)
-      calc((-1 * var(--speed)) * (var(--idx) / 10)) infinite alternate;
-}
-
-@keyframes scale {
-  0% { opacity: 0; }
-  15%, 25% { opacity: 1; }
-  100% {
-    opacity: 1;
-    scale: 1;
-  }
-}
-
-@keyframes travel {
-  0%, 5% {
-    transform: translate3d(0, 0, 0);
-    translate: -50% -5%;
-  }
-  95%, 100% {
-    transform: translate3d(0, 0, 10px);
-    translate: -50% calc(100cqb - 95%);
-  }
-}</style>
-
-    <div class="loader-wrapper">
-
-  
-
-
-
-  <div class="loader">
-    <span style="--idx: 0"></span>
-    <span style="--idx: 1"></span>
-    <span style="--idx: 2"></span>
-    <span style="--idx: 3"></span>
-    <span style="--idx: 4"></span>
-    <span style="--idx: 5"></span>
-    <span style="--idx: 6"></span>
-    <span style="--idx: 7"></span>
-    <span style="--idx: 8"></span>
-    <span style="--idx: 9"></span>
-  </div>
-
-</div>
-    <div
-      class="fixed bottom-0 left-0 right-0 z-[9999999] h-[8svh] md:h-auto flex md:bottom-6 md:right-6 md:left-auto md:flex-col gap-0 md:gap-3 p-0 bg-transparent backdrop-blur-sm md:backdrop-blur-none"
-    >
-      <!-- WhatsApp Button -->
-      <a
-        href="https://wa.me/918767591139?text=Hi%20SR%20Film%20Photography,%20I%20am%20interested%20in%20booking%20a%20photography%20session.%20Could%20you%20please%20share%20more%20details%20about%20your%20packages%20and%20availability?"
-        target="_blank"
-        rel="noopener noreferrer"
+    <!-- ══════════════════════════════════════════
+         FLOATING CTA BAR (Mobile bottom / Desktop side)
+    ══════════════════════════════════════════ -->
+    <div class="fixed bottom-0 left-0 right-0 z-[9999999] h-[8svh] md:h-auto flex md:bottom-6 md:right-6 md:left-auto md:flex-col gap-0 md:gap-3 p-0 bg-transparent backdrop-blur-sm md:backdrop-blur-none">
+      <a href="https://wa.me/918767591139?text=Hi%20SR%20Film%20Photography,%20I%20am%20interested%20in%20booking%20a%20photography%20session.%20Could%20you%20please%20share%20more%20details%20about%20your%20packages%20and%20availability?"
+        target="_blank" rel="noopener noreferrer"
         class="flex-1 md:flex-none inline-flex items-center justify-center md:w-12 md:h-12 md:rounded-full font-medium transition-all duration-300 shadow-lg border-r md:border border-opacity-20 active:scale-[0.97]"
-        style="
-          background-color: #faf5eb;
-          color: #8c2923;
-          border-color: rgba(140, 41, 35, 0.2);
-        "
-        aria-label="Chat on WhatsApp"
-      >
+        style="background-color:#faf5eb;color:#8c2923;border-color:rgba(140,41,35,0.2);"
+        aria-label="Chat on WhatsApp">
         <i class="ri-whatsapp-line text-xl"></i>
-        <span class="ml-2 text-sm font-semibold md:hidden tracking-wider"
-          >WHATSAPP</span
-        >
+        <span class="ml-2 text-sm font-semibold md:hidden tracking-wider">WHATSAPP</span>
       </a>
-
-      <!-- Call Button -->
-      <a
-        href="tel:+918767591139"
+      <a href="tel:+918767591139"
         class="flex-1 md:flex-none inline-flex items-center justify-center md:w-12 md:h-12 md:rounded-full font-medium transition-all duration-300 shadow-lg active:scale-[0.97]"
-        style="background-color: #8c2923; color: #faf5eb"
-        aria-label="Call us now"
-      >
+        style="background-color:#8c2923;color:#faf5eb;" aria-label="Call us now">
         <i class="ri-phone-line text-xl"></i>
-        <span class="ml-2 text-sm font-semibold md:hidden tracking-wider"
-          >CALL NOW</span
-        >
+        <span class="ml-2 text-sm font-semibold md:hidden tracking-wider">CALL NOW</span>
       </a>
     </div>
 
     <div class="root">
-      <section
-        data-scroll
-        data-scroll-speed="2"
-        id="hero-section"
-        class="w-full bg-dark-red relative p-2 flex justify-center"
-      >
-        <div
-          class="w-full hero-container rounded-[8px] overflow-hidden flex-col md:flex-row flex bg-cream"
-        >
-         <!-- Main responsive column wrapper with visibility fixes -->
-<div class="hero-left-panel opacity-0 invisible w-full md:w-1/2 gap-[80px] md:gap-0 md:h-[800px] flex flex-col justify-between items-center pt-[28px] px-[32px] pb-[64px]">
-  
-  <!-- TOP NAVIGATION BLOCK (Perfect Grid Alignment) -->
-<div class="top-nav w-full flex justify-between items-center px-2 sm:px-4">
-    <span class="font-secondary font-normal color-black leading-large text-large tracking-wide shrink-0">
-      SR FILM
-    </span>
 
-    <div class="flex items-center justify-end">
-      <div class="hidden md:block uppercase text-end text-cblack leading-sm text-sm font-normal">
-        <p>Wedding Photography</p>
-        <p>Since 2018</p>
-      </div>
+      <!--  HERO SECTION -->
+      <section id="hero-section" aria-label="Hero — SR Film Photography"
+        class="w-full bg-brand relative p-2 flex justify-center">
+        <div class="w-full hero-container rounded-[8px] overflow-hidden flex-col md:flex-row flex bg-surface">
 
-      <button onclick="openMenu()" class="block md:hidden shrink-0 text-xsm uppercase bg-black text-[#faf5eb] rounded-[100px] py-[10px] px-[20px] mr-2 font-primary font-normal leading-normal transition-transform active:scale-95 shadow-md">
-        Menu
-      </button>
-    </div>
-  </div>
+          <!-- LEFT PANEL -->
+          <div class="hero-left-panel opacity-0 invisible w-full md:w-1/2 gap-[80px] md:gap-0 md:h-[800px] flex flex-col justify-between items-center pt-[28px] px-4 md:px-8 pb-16">
 
-  <!-- HERO MAIN TYPOGRAPHY -->
-  <div class="hero-top-content pt-[48px] space-y-3 flex flex-col items-center uppercase w-full">
-    <div class="overflow-hidden">
-      <h2 class="font-secondary text-center text-[14vw] leading-[15vw] md:text-xlarge md:leading-xlarge">
-        Capturing <br />
-        Moments
-      </h2>
-    </div>
-    <div class="text-cblack flex gap-2 items-center justify-center text-center text-md leading-md font-normal font-primary">
-      <span>Film Maker</span>
-      <span class="line w-3 h-[1px] bg-grey inline-block"></span>
-      <span>Pune Maharashtra</span>
-    </div>
-  </div>
-
-  <!-- MIDDLE DESCRIPTION -->
-  <div class="hero-middle-content font-primary text-[#141313] text-center uppercase text-md leading-md w-full md:max-w-[380px] mx-auto">
-    <p>
-      Capturing genuine emotions, timeless stories, and unforgettable
-      celebrations through cinematic films and authentic photography.
-      Every frame is crafted to preserve your most meaningful moments.
-    </p>
-  </div>
-
-  <!-- PORTFOLIO CTA ACTION -->
-  <div class="hero-cta">
-    <a href="#portfolio" class="inline-block uppercase text-[#faf5eb] rounded-[100px] px-[32px] py-[20px] bg-black font-primary text-sm leading-sm transition-all hover:bg-neutral-800 active:scale-97">
-      View Portfolio
-    </a>
-  </div>
-</div>
-
-          <div
-            class="w-full md:w-1/2 h-[600px] md:h-full relative overflow-hidden"
-          >
-            <div
-              class="fixed-menu-bar hidden md:flex gap-2 items-center z-[99] absolute top-[28px] right-[32px]"
-            >
-              <button
-                onclick="openMenu()"
-                class="menu-button shrink-0 text-xsm uppercase bg-[#faf5eb] rounded-[100px] py-[12px] px-[16px] font-primary font-normal leading-normal transition-all hover:bg-black hover:text-[#faf5eb] shadow-md"
-              >
-                Menu
-              </button>
+            <!-- NAV -->
+            <div class="top-nav w-full flex justify-between items-center">
+              <span class="font-secondary font-normal text-ink leading-large text-large tracking-wide shrink-0">SR FILM</span>
+              <div class="flex items-center gap-3">
+                <div class="hidden md:block uppercase text-end text-ink-muted leading-sm text-sm font-normal font-primary">
+                  <p>Wedding Photography</p>
+                  <p>Since 2018</p>
+                </div>
+                <!-- Mobile hamburger -->
+                <button onclick="openMenu()" aria-label="Open navigation menu"
+                  class="block md:hidden shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-ink text-surface transition-all active:scale-95">
+                  <i class="ri-menu-2-line text-xl"></i>
+                </button>
+              </div>
             </div>
 
-            <img
-              class="absolute inset-0 w-full h-full object-cover"
+            <!-- HERO TITLE -->
+            <div class="hero-top-content pt-12 space-y-3 flex flex-col items-center uppercase w-full">
+              <div class="overflow-hidden">
+                <h1 class="font-secondary text-center text-[14vw] leading-[15vw] md:text-xlarge md:leading-xlarge">
+                  Capturing <br />Moments
+                </h1>
+              </div>
+              <div class="text-ink-muted flex gap-2 items-center justify-center text-center text-md leading-md font-normal font-primary">
+                <span>Film Maker</span>
+                <span class="w-3 h-px bg-ink-faint inline-block"></span>
+                <span>Pune Maharashtra</span>
+              </div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="hero-middle-content font-primary text-ink text-center uppercase text-md leading-md w-full md:max-w-[380px] mx-auto">
+              <p>Capturing genuine emotions, timeless stories, and unforgettable celebrations through cinematic films and authentic photography. Every frame is crafted to preserve your most meaningful moments.</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="hero-cta">
+              <a href="#portfolio"
+                class="inline-block uppercase text-surface rounded-[100px] px-8 py-5 bg-ink font-primary text-sm leading-sm transition-all hover:bg-ink/80 active:scale-95">
+                View Portfolio
+              </a>
+            </div>
+          </div>
+
+          <!-- RIGHT IMAGE PANEL -->
+          <div class="w-full md:w-1/2 h-[600px] md:h-full relative overflow-hidden">
+            <!-- Desktop hamburger over image -->
+            <div class="hidden md:flex gap-2 items-center z-[99] absolute top-7 right-8">
+              <button onclick="openMenu()" aria-label="Open navigation menu"
+                class="menu-button inline-flex items-center gap-2 shrink-0 text-xsm uppercase bg-surface rounded-[100px] py-3 px-4 font-primary font-normal leading-normal transition-all hover:bg-ink hover:text-surface shadow-md">
+                <i class="ri-menu-2-line text-base"></i>
+                <span>Menu</span>
+              </button>
+            </div>
+            <img class="absolute inset-0 w-full h-full object-cover"
               src="https://images-pw.pixieset.com/elementfield/0kWk4w/Sample14-8e4e9e3c-1500.jpg"
-              alt="Hero Image"
-            />
+              alt="SR Film Photography — Wedding moment" />
           </div>
         </div>
       </section>
 
-      <section
-        id="menu"
-        class="fixed inset-0 z-[9999] p-2 sm:p-4 will-change-transform"
-        style="background-color: #8c2923; display: none"
-      >
+      <!-- MENU  -->
+      <section id="menu" aria-label="Navigation menu"
+        class="fixed inset-0 z-[9999999999] p-2  will-change-transform hidden"
+        style="background-color:#8c2923">
+        <!-- Close button -->
         <div class="absolute top-6 right-6 z-[10000]">
-          <button
-            aria-label="Close Menu"
-            onclick="closeMenu()"
-            class="rounded-full px-5 py-2.5 border font-secondary text-[13px] tracking-widest font-semibold transition-all duration-300 shadow-md"
-            style="
-              border-color: rgba(140, 41, 35, 0.3);
-              background-color: #faf5eb;
-              color: #8c2923;
-            "
-            onmouseover="
-              this.style.backgroundColor = '#8c2923';
-              this.style.color = '#faf5eb';
-              this.style.borderColor = '#8c2923';
-            "
-            onmouseout="
-              this.style.backgroundColor = '#faf5eb';
-              this.style.color = '#8c2923';
-              this.style.borderColor = 'rgba(140, 41, 35, 0.3)';
-            "
-          >
+          <button aria-label="Close menu" onclick="closeMenu()"
+            class="inline-flex items-center gap-2 shrink-0 text-xsm uppercase bg-surface rounded-[100px] py-3 px-4 font-primary font-normal leading-normal transition-all hover:bg-ink hover:text-surface shadow-md">
+            <i class="ri-close-line text-base"></i>
             CLOSE
           </button>
         </div>
 
-        <div
-          class="menu-inner w-full h-full rounded-[8px] overflow-y-auto md:overflow-hidden will-change-transform"
-          style="background-color: #faf5eb"
-        >
-          <div
-            class="w-full min-h-full md:h-full grid grid-cols-1 md:grid-cols-12"
-          >
-            <div
-              class="col-span-1 md:col-span-6 px-6 py-8 md:px-[32px] md:py-[28px] flex flex-col justify-between gap-12 md:gap-0 min-h-[85vh] md:min-h-0"
-            >
+        <div class="menu-inner w-full h-full rounded-[8px] overflow-hidden will-change-transform bg-surface">
+          <div class="w-full h-full grid grid-cols-1 md:grid-cols-12 overflow-y-auto md:overflow-hidden">
+
+            <!-- LEFT — Nav content -->
+            <div class="col-span-1 md:col-span-6 px-6 py-8 md:px-8 md:py-7 flex flex-col justify-between gap-12 md:gap-0 min-h-screen md:min-h-0 md:h-full overflow-y-auto md:overflow-hidden">
               <div>
-                <span
-                  class="font-secondary block font-normal text-black leading-large text-large tracking-wider"
-                >
-                  SR FILM
-                </span>
+                <span class="font-secondary block font-normal text-ink leading-large text-large tracking-wider">SR FILM</span>
               </div>
 
               <div class="space-y-8 md:space-y-6">
-                <div
-                  class="navigation-link flex flex-col text-[36px] sm:text-[48px] md:text-[52px] leading-[1.1] font-secondary font-medium"
-                >
-                  <a
-                    href="#hero-section"
-                    onclick="closeMenu()"
-                    class="group relative block overflow-hidden py-1 h-[1.3em]"
-                  >
-                    <div
-                      class="relative transition-transform duration-500 ease-out transform"
-                    >
-                      <span class="block">HOME</span>
-                    </div>
-                  </a>
+                <nav class="navigation-link flex flex-col text-[36px] sm:text-[48px] md:text-[52px] leading-[1.1] font-secondary font-medium" aria-label="Primary navigation">
+                  <a href="#hero-section" onclick="closeMenu()" class="group relative block overflow-hidden py-1 h-[1.3em] transition-all duration-300 hover:translate-x-2"><span class="block">HOME</span></a>
+                  <a href="#services-section" onclick="closeMenu()" class="group relative block overflow-hidden py-1 h-[1.3em] transition-all duration-300 hover:translate-x-2"><span class="block">SERVICES</span></a>
+                  <a href="#about-company" onclick="closeMenu()" class="group relative block overflow-hidden py-1 h-[1.3em] transition-all duration-300 hover:translate-x-2"><span class="block">ABOUT</span></a>
+                  <a href="#gallery-section" onclick="closeMenu()" class="group relative block overflow-hidden py-1 h-[1.3em] transition-all duration-300 hover:translate-x-2"><span class="block">GALLERY</span></a>
+                  <a href="#portfolio" onclick="closeMenu()" class="group relative block overflow-hidden py-1 h-[1.3em] transition-all duration-300 hover:translate-x-2"><span class="block">FILMS</span></a>
+                  <a href="#testimonials" onclick="closeMenu()" class="group relative block overflow-hidden py-1 h-[1.3em] transition-all duration-300 hover:translate-x-2"><span class="block">TESTIMONIALS</span></a>
+                </nav>
 
-                  <a
-                    href="#services-section"
-                    onclick="closeMenu()"
-                    class="group relative block overflow-hidden py-1 h-[1.3em]"
-                  >
-                    <div
-                      class="relative transition-transform duration-500 ease-out transform"
-                    >
-                      <span class="block">SERVICES</span>
-                    </div>
-                  </a>
-
-                  <a
-                    href="#about-company"
-                    onclick="closeMenu()"
-                    class="group relative block overflow-hidden py-1 h-[1.3em]"
-                  >
-                    <div
-                      class="relative transition-transform duration-500 ease-out transform"
-                    >
-                      <span class="block">ABOUT</span>
-                    </div>
-                  </a>
-
-                  <a
-                    href="#gallery-section"
-                    onclick="closeMenu()"
-                    class="group relative block overflow-hidden py-1 h-[1.3em]"
-                  >
-                    <div
-                      class="relative transition-transform duration-500 ease-out transform"
-                    >
-                      <span class="block">GALLERY</span>
-                    </div>
-                  </a>
-
-                  <a
-                    href="#portfolio"
-                    onclick="closeMenu()"
-                    class="group relative block overflow-hidden py-1 h-[1.3em]"
-                  >
-                    <div
-                      class="relative transition-transform duration-500 ease-out transform"
-                    >
-                      <span class="block">FILMS</span>
-                    </div>
-                  </a>
-
-                  <a
-                    href="#testimonials"
-                    onclick="closeMenu()"
-                    class="group relative block overflow-hidden py-1 h-[1.3em]"
-                  >
-                    <div
-                      class="relative transition-transform duration-500 ease-out transform"
-                    >
-                      <span class="block">TESTIMONIALS</span>
-                    </div>
-                  </a>
-                </div>
-
-                <div
-                  class="flex font-primary text-[15px] sm:text-[16px] text-[#141313] leading-[19px] flex-col gap-1"
-                >
-                  <a
-                    href="mailto:captionsunil2211@gmail.com"
-                    class="py-1 hover:underline w-fit"
-                    >captionsunil2211@gmail.com</a
-                  >
-                  <a href="tel:+918767591139" class="py-1 hover:underline w-fit"
-                    >+91 87675 91139</a
-                  >
-                </div>
+                <address class="not-italic flex font-primary text-md text-ink leading-md flex-col gap-1">
+                  <a href="mailto:captionsunil2211@gmail.com" class="py-1 hover:underline w-fit transition-all duration-300">captionsunil2211@gmail.com</a>
+                  <a href="tel:+918767591139" class="py-1 hover:underline w-fit transition-all duration-300">+91 87675 91139</a>
+                </address>
               </div>
 
-              <div class="flex items-center gap-4 mb-[70px] md:mb-0">
-                <a
-                  href="#"
-                  aria-label="Instagram"
-                  class="group w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300"
-                  style="border-color: rgba(140, 41, 35, 0.2); color: #8c2923"
-                  onmouseover="
-                    this.style.backgroundColor = '#8c2923';
-                    this.style.color = '#faf5eb';
-                  "
-                  onmouseout="
-                    this.style.backgroundColor = 'transparent';
-                    this.style.color = '#8c2923';
-                  "
-                >
-                  <i
-                    class="ri-instagram-line text-xl w-5 h-5 flex items-center justify-center"
-                  ></i>
-                </a>
-
-                <a
-                  href="#"
-                  aria-label="Facebook"
-                  class="group w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300"
-                  style="border-color: rgba(140, 41, 35, 0.2); color: #8c2923"
-                  onmouseover="
-                    this.style.backgroundColor = '#8c2923';
-                    this.style.color = '#faf5eb';
-                  "
-                  onmouseout="
-                    this.style.backgroundColor = 'transparent';
-                    this.style.color = '#8c2923';
-                  "
-                >
-                  <i
-                    class="ri-facebook-box-line text-xl w-5 h-5 flex items-center justify-center"
-                  ></i>
-                </a>
-
-                <a
-                  href="#"
-                  aria-label="Twitter"
-                  class="group w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300"
-                  style="border-color: rgba(140, 41, 35, 0.2); color: #8c2923"
-                  onmouseover="
-                    this.style.backgroundColor = '#8c2923';
-                    this.style.color = '#faf5eb';
-                  "
-                  onmouseout="
-                    this.style.backgroundColor = 'transparent';
-                    this.style.color = '#8c2923';
-                  "
-                >
-                  <i
-                    class="ri-twitter-x-line text-xl w-5 h-5 flex items-center justify-center"
-                  ></i>
-                </a>
+              <div class="flex items-center gap-3 mb-[70px] md:mb-0">
+                <a href="#" aria-label="Instagram" class="w-11 h-11 rounded-full border border-brand/20 flex items-center justify-center transition-all duration-300 text-brand hover:bg-brand hover:text-surface hover:border-brand"><i class="ri-instagram-line text-xl"></i></a>
+                <a href="#" aria-label="Facebook" class="w-11 h-11 rounded-full border border-brand/20 flex items-center justify-center transition-all duration-300 text-brand hover:bg-brand hover:text-surface hover:border-brand"><i class="ri-facebook-box-line text-xl"></i></a>
+                <a href="#" aria-label="Twitter / X" class="w-11 h-11 rounded-full border border-brand/20 flex items-center justify-center transition-all duration-300 text-brand hover:bg-brand hover:text-surface hover:border-brand"><i class="ri-twitter-x-line text-xl"></i></a>
               </div>
             </div>
 
-            <div
-              class="hidden md:flex col-span-1 md:col-span-6 h-full flex-col"
-            >
+            <!-- RIGHT — Images (desktop) -->
+            <div class="hidden md:flex col-span-6 h-full flex-col">
               <div class="overflow-hidden flex-1 relative group cursor-pointer">
-                <img
-                  class="absolute w-full h-full inset-0 object-cover transition-transform duration-700 group-hover:scale-105"
-                  src="https://images-pw.pixieset.com/elementfield/0kWk4w/Sample155-61f2f11a-1500.jpg"
-                  alt="Wedding Photography"
-                />
-                <div
-                  class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"
-                ></div>
-
-                <div
-                  class="absolute left-6 bottom-6 flex items-center gap-3 text-white"
-                >
-                  <h2
-                    class="text-[28px] sm:text-[32px] font-secondary tracking-wide"
-                  >
-                    WEDDINGS
-                  </h2>
-
+                <img class="absolute w-full h-full inset-0 object-cover transition-transform duration-700 group-hover:scale-105"
+                  src="https://images-pw.pixieset.com/elementfield/0kWk4w/Sample155-61f2f11a-1500.jpg" alt="Wedding Photography" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute left-6 bottom-6 flex items-center gap-3 text-white">
+                  <h2 class="text-[32px] font-secondary tracking-wide">WEDDINGS</h2>
                   <div class="relative w-6 h-6 overflow-hidden">
-                    <div
-                      class="flex w-[200%] h-full transition-transform duration-500 ease-out transform group-hover:-translate-x-1/2"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        class="w-6 h-6 shrink-0"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                        />
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        class="w-6 h-6 shrink-0"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                        />
-                      </svg>
+                    <div class="flex w-[200%] h-full transition-transform duration-500 ease-out transform group-hover:-translate-x-1/2">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                     </div>
                   </div>
                 </div>
               </div>
-
               <div class="overflow-hidden flex-1 relative group cursor-pointer">
-                <img
-                  class="absolute w-full h-full inset-0 object-cover transition-transform duration-700 group-hover:scale-105"
-                  src="https://images-pw.pixieset.com/elementfield/0kWk4w/Sample151-934573e9-1500.jpg"
-                  alt="Destination Photography"
-                />
-                <div
-                  class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"
-                ></div>
-
-                <div
-                  class="absolute left-6 bottom-6 flex items-center gap-3 text-white"
-                >
-                  <h2
-                    class="text-[28px] sm:text-[32px] font-secondary tracking-wide"
-                  >
-                    DESTINATIONS
-                  </h2>
-
+                <img class="absolute w-full h-full inset-0 object-cover transition-transform duration-700 group-hover:scale-105"
+                  src="https://images-pw.pixieset.com/elementfield/0kWk4w/Sample151-934573e9-1500.jpg" alt="Destination Photography" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute left-6 bottom-6 flex items-center gap-3 text-white">
+                  <h2 class="text-[32px] font-secondary tracking-wide">DESTINATIONS</h2>
                   <div class="relative w-6 h-6 overflow-hidden">
-                    <div
-                      class="flex w-[200%] h-full transition-transform duration-500 ease-out transform group-hover:-translate-x-1/2"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        class="w-6 h-6 shrink-0"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                        />
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        class="w-6 h-6 shrink-0"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                        />
-                      </svg>
+                    <div class="flex w-[200%] h-full transition-transform duration-500 ease-out transform group-hover:-translate-x-1/2">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 shrink-0"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      <!-- SERVICE SECTION -->
+      <!--  SERVICES SECTION -->
+      <section id="services-section" aria-labelledby="services-heading"
+        class="px-2 bg-brand pb-2">
+        <div class="w-full rounded-[6px] relative overflow-hidden pt-12 md:pt-20 px-4 md:px-8 pb-10 md:pb-16">
 
-      <section id="services-section" class="px-2 bg-dark-red pb-2">
-        <div
-          class="w-full rounded-[6px] relative overflow-hidden pt-[40px] md:pt-[64px] px-[16px] md:px-[32px] pb-[40px]"
-        >
-          <!-- Header -->
-          <div
-            class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6 mb-12 sm:mb-16"
-          >
+          <!-- Section header -->
+          <header class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6 mb-12 sm:mb-16">
             <div>
-              <div class="flex items-center gap-2">
-                <span
-                  class="dot inline-block size-[5px] bg-cream shrink-0"
-                ></span>
-                <span
-                  class="font-primary text-xsm uppercase tracking-[0.2em] text-[#faf5eb99]"
-                >
-                  What We Capture
-                </span>
+              <div class="section-tag">
+                <span class="dot bg-surface"></span>
+                <span class="text-cream-ghost font-primary">What We Capture</span>
               </div>
-              <h2
-                class="font-secondary text-[26px] sm:text-[36px] md:text-[48px] md:leading-[52px] leading-tight mt-3 uppercase text-cream"
-              >
-                Stories Told Through <br />
-                Every Frame.
+              <h2 id="services-heading"
+                class="font-secondary text-[26px] sm:text-[36px] md:text-3xl md:leading-[52px] leading-tight mt-2 uppercase text-surface">
+                Stories Told Through <br />Every Frame.
               </h2>
             </div>
-            <p
-              class="font-primary text-sm sm:text-md text-[#faf5eb99] leading-md md:max-w-lg md:text-right uppercase"
-            >
-              From intimate ceremonies to grand destination weddings we craft
-              cinematic films and authentic photography that preserve your most
-              meaningful moments forever.
+            <p class="font-primary text-sm sm:text-md text-cream-ghost leading-md md:max-w-lg md:text-right uppercase">
+              From intimate ceremonies to grand destination weddings we craft cinematic films and authentic photography that preserve your most meaningful moments forever.
             </p>
-          </div>
+          </header>
 
-          <!-- Cards Grid -->
-          <ul
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 list-none p-0 m-0"
-          >
+          <!-- Service Cards Grid -->
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 list-none p-0 m-0">
+
             <!-- Card 1 — Wedding Photography -->
             <li class="group flex flex-col">
               <a href="#" class="flex flex-col gap-3 cursor-pointer">
-                <div
-                  class="overflow-hidden rounded-[6px] bg-[#faf5eb10] relative w-full"
-                >
+                <div class="overflow-hidden rounded-[6px] bg-cream-whisper relative w-full">
                   <div class="swiper projectSwiper w-full swiper-fade">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-1.webp"
-                          alt="Wedding Photography"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-2.webp"
-                          alt="Wedding Photography"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-3.webp"
-                          alt="Wedding Photography"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-4.webp"
-                          alt="Wedding Photography"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-5.webp"
-                          alt="Wedding Photography"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-6.webp"
-                          alt="Wedding Photography"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-7.webp"
-                          alt="Wedding Photography"
-                        />
-                      </div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-1.webp" alt="Wedding Photography" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-2.webp" alt="Wedding Photography" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-3.webp" alt="Wedding Photography" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-4.webp" alt="Wedding Photography" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-5.webp" alt="Wedding Photography" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-6.webp" alt="Wedding Photography" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-7.webp" alt="Wedding Photography" /></div>
                     </div>
                     <div class="swiper-pagination !bottom-3"></div>
                   </div>
                 </div>
-
                 <div class="flex items-center justify-between pt-1">
-                  <!-- Slide-up label -->
                   <div class="relative overflow-hidden h-[20px] flex-1">
-                    <span
-                      class="font-primary text-[16px] sm:text-[14px] leading-[20px] text-cream block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0"
-                    >
-                      Wedding Photography
-                    </span>
-                    <span
-                      class="font-primary text-[16px] sm:text-[14px] leading-[20px] text-cream block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      Wedding Photography
-                    </span>
+                    <span class="font-primary text-md leading-[20px] text-surface block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0">Wedding Photography</span>
+                    <span class="font-primary text-md leading-[20px] text-surface block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100">Wedding Photography</span>
                   </div>
-                  <!-- Arrow -->
                   <div class="relative w-5 h-5 overflow-hidden shrink-0">
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
                   </div>
                 </div>
               </a>
@@ -720,111 +382,29 @@
             <!-- Card 2 — Cinematic Films -->
             <li class="group flex flex-col">
               <a href="#" class="flex flex-col gap-3 cursor-pointer">
-                <div
-                  class="overflow-hidden rounded-[6px] bg-[#faf5eb10] relative w-full"
-                >
+                <div class="overflow-hidden rounded-[6px] bg-cream-whisper relative w-full">
                   <div class="swiper projectSwiper w-full swiper-fade">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-21.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-22.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-24.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-25.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
-
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-27.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-28.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-29.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-30.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-31.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-32.webp"
-                          alt="Cinematic Films"
-                        />
-                      </div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-21.webp" alt="Cinematic Films" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-22.webp" alt="Cinematic Films" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-24.webp" alt="Cinematic Films" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-25.webp" alt="Cinematic Films" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-27.webp" alt="Cinematic Films" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-28.webp" alt="Cinematic Films" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-30.webp" alt="Cinematic Films" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-32.webp" alt="Cinematic Films" /></div>
                     </div>
                     <div class="swiper-pagination !bottom-3"></div>
                   </div>
                 </div>
-
                 <div class="flex items-center justify-between pt-1">
                   <div class="relative overflow-hidden h-[20px] flex-1">
-                    <span
-                      class="font-primary text-[16px] leading-[20px] text-cream block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0"
-                    >
-                      Cinematic Films
-                    </span>
-                    <span
-                      class="font-primary text-[16px] leading-[20px] text-cream block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      Cinematic Films
-                    </span>
+                    <span class="font-primary text-md leading-[20px] text-surface block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0">Cinematic Films</span>
+                    <span class="font-primary text-md leading-[20px] text-surface block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100">Cinematic Films</span>
                   </div>
                   <div class="relative w-4 h-4 overflow-hidden shrink-0">
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
                   </div>
                 </div>
               </a>
@@ -833,96 +413,27 @@
             <!-- Card 3 — Destination Weddings -->
             <li class="group flex flex-col">
               <a href="#" class="flex flex-col gap-3 cursor-pointer">
-                <div
-                  class="overflow-hidden rounded-[6px] bg-[#faf5eb10] relative w-full"
-                >
+                <div class="overflow-hidden rounded-[6px] bg-cream-whisper relative w-full">
                   <div class="swiper projectSwiper w-full swiper-fade">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-39.webp"
-                          alt="Destination Weddings"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-40.webp"
-                          alt="Destination Weddings"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-41.webp"
-                          alt="Destination Weddings"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-42.webp"
-                          alt="Destination Weddings"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-43.webp"
-                          alt="Destination Weddings"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-44.webp"
-                          alt="Destination Weddings"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-45.webp"
-                          alt="Destination Weddings"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-46.webp"
-                          alt="Destination Weddings"
-                        />
-                      </div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-39.webp" alt="Destination Weddings" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-40.webp" alt="Destination Weddings" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-41.webp" alt="Destination Weddings" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-42.webp" alt="Destination Weddings" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-44.webp" alt="Destination Weddings" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-46.webp" alt="Destination Weddings" /></div>
                     </div>
                     <div class="swiper-pagination !bottom-3"></div>
                   </div>
                 </div>
-
                 <div class="flex items-center justify-between pt-1">
                   <div class="relative overflow-hidden h-[20px] flex-1">
-                    <span
-                      class="font-primary text-[16px] leading-[20px] text-cream block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0"
-                    >
-                      Destination Weddings
-                    </span>
-                    <span
-                      class="font-primary text-[16px] leading-[20px] text-cream block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      Destination Weddings
-                    </span>
+                    <span class="font-primary text-md leading-[20px] text-surface block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0">Destination Weddings</span>
+                    <span class="font-primary text-md leading-[20px] text-surface block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100">Destination Weddings</span>
                   </div>
                   <div class="relative w-4 h-4 overflow-hidden shrink-0">
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
                   </div>
                 </div>
               </a>
@@ -931,68 +442,25 @@
             <!-- Card 4 — Pre-Wedding Shoots -->
             <li class="group flex flex-col">
               <a href="#" class="flex flex-col gap-3 cursor-pointer">
-                <div
-                  class="overflow-hidden rounded-[6px] bg-[#faf5eb10] relative w-full"
-                >
+                <div class="overflow-hidden rounded-[6px] bg-cream-whisper relative w-full">
                   <div class="swiper projectSwiper w-full swiper-fade">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-58.webp"
-                          alt="Pre-Wedding Shoots"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-59.webp"
-                          alt="Pre-Wedding Shoots"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-60.webp"
-                          alt="Pre-Wedding Shoots"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-61.webp"
-                          alt="Pre-Wedding Shoots"
-                        />
-                      </div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-58.webp" alt="Pre-Wedding Shoots" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-59.webp" alt="Pre-Wedding Shoots" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-60.webp" alt="Pre-Wedding Shoots" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-61.webp" alt="Pre-Wedding Shoots" /></div>
                     </div>
                     <div class="swiper-pagination !bottom-3"></div>
                   </div>
                 </div>
-
                 <div class="flex items-center justify-between pt-1">
                   <div class="relative overflow-hidden h-[20px] flex-1">
-                    <span
-                      class="font-primary text-[16px] leading-[20px] text-cream block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0"
-                    >
-                      Pre-Wedding Shoots
-                    </span>
-                    <span
-                      class="font-primary text-[16px] leading-[20px] text-cream block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      Pre-Wedding Shoots
-                    </span>
+                    <span class="font-primary text-md leading-[20px] text-surface block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0">Pre-Wedding Shoots</span>
+                    <span class="font-primary text-md leading-[20px] text-surface block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100">Pre-Wedding Shoots</span>
                   </div>
                   <div class="relative w-4 h-4 overflow-hidden shrink-0">
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
                   </div>
                 </div>
               </a>
@@ -1001,277 +469,97 @@
             <!-- Card 5 — Candid Moments -->
             <li class="group flex flex-col">
               <a href="#" class="flex flex-col gap-3 cursor-pointer">
-                <div
-                  class="overflow-hidden rounded-[6px] bg-[#faf5eb10] relative w-full"
-                >
+                <div class="overflow-hidden rounded-[6px] bg-cream-whisper relative w-full">
                   <div class="swiper projectSwiper w-full swiper-fade">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-76.webp"
-                          alt="Candid Moments"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-77.webp"
-                          alt="Candid Moments"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-78.webp"
-                          alt="Candid Moments"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-79.webp"
-                          alt="Candid Moments"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-80.webp"
-                          alt="Candid Moments"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-81.webp"
-                          alt="Candid Moments"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-82.webp"
-                          alt="Candid Moments"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-83.webp"
-                          alt="Candid Moments"
-                        />
-                      </div>
-                      <div class="swiper-slide">
-                        <img
-                          class="w-full object-cover block"
-                          src="./assets/image/image-84.webp"
-                          alt="Candid Moments"
-                        />
-                      </div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-76.webp" alt="Candid Moments" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-77.webp" alt="Candid Moments" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-78.webp" alt="Candid Moments" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-80.webp" alt="Candid Moments" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-82.webp" alt="Candid Moments" /></div>
+                      <div class="swiper-slide"><img class="w-full object-cover block" src="./assets/image/image-84.webp" alt="Candid Moments" /></div>
                     </div>
                     <div class="swiper-pagination !bottom-3"></div>
                   </div>
                 </div>
-
                 <div class="flex items-center justify-between pt-1">
                   <div class="relative overflow-hidden h-[20px] flex-1">
-                    <span
-                      class="font-primary text-[16px] leading-[20px] text-cream block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0"
-                    >
-                      Candid Moments
-                    </span>
-                    <span
-                      class="font-primary text-[16px] leading-[20px] text-cream block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      Candid Moments
-                    </span>
+                    <span class="font-primary text-md leading-[20px] text-surface block transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-0 group-hover:-translate-y-full opacity-100 group-hover:opacity-0">Candid Moments</span>
+                    <span class="font-primary text-md leading-[20px] text-surface block absolute inset-0 transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100">Candid Moments</span>
                   </div>
                   <div class="relative w-4 h-4 overflow-hidden shrink-0">
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
-                    <span
-                      class="absolute inset-0 flex items-center justify-center text-cream transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"
-                    >
-                      <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-0 translate-y-0 group-hover:translate-x-[4px] group-hover:-translate-y-[4px] group-hover:opacity-0 opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+                    <span class="absolute inset-0 flex items-center justify-center text-surface transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-[4px] translate-y-[4px] group-hover:translate-x-0 group-hover:translate-y-0 opacity-0 group-hover:opacity-100"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
                   </div>
                 </div>
               </a>
             </li>
+
           </ul>
         </div>
       </section>
 
-      <!-- ABOUT SECTION -->
+      <!--  ABOUT SECTION -->
+      <section id="about-company" aria-labelledby="about-heading"
+        class="px-2 bg-brand pb-2">
+        <div class="w-full bg-surface rounded-[6px] relative overflow-hidden pt-12 md:pt-20 px-4 md:px-8 pb-8 md:pb-12">
 
-      <section id="about-company" class="px-2 bg-dark-red pb-2">
-        <div
-          class="w-full bg-cream rounded-[6px] relative overflow-hidden pt-[40px] md:pt-[64px] px-[16px] md:px-[32px] pb-[32px]"
-        >
-          <!-- decorative bg images -->
-          <img
-            src="./assets/image/feature.png"
-            class="absolute top-0 -right-10 b w-[280px] rotate-[25deg] pointer-events-none z-0"
-            alt=""
-          />
-          <img
-            src="./assets/image/flower.png"
-            class="absolute -bottom-10 -left-10 w-[220px] rotate-[-15deg] pointer-events-none z-0"
-            alt=""
-          />
+          <!-- Decorative assets -->
+          <img src="./assets/image/feature.png" class="absolute top-0 -right-10 w-[280px] rotate-[25deg] pointer-events-none z-0 opacity-60" alt="" aria-hidden="true" />
+          <img src="./assets/image/flower.png" class="absolute -bottom-10 -left-10 w-[220px] rotate-[-15deg] pointer-events-none z-0 opacity-60" alt="" aria-hidden="true" />
 
-          <div
-            class="container-frame relative grid gap-8 md:gap-0 grid-cols-12"
-          >
-            <h2
-              class="font-secondary max-w-[850px] text-[22px] leading-[28px] sm:text-[30px] sm:leading-[36px] md:text-[40px] md:leading-[46px] col-span-12 md:col-span-8"
-            >
-              SR FILM IS A WEDDING & DESTINATION PHOTOGRAPHY STUDIO GUIDED BY
-              EMOTION AND LIGHT. EACH FRAME IS SHAPED THROUGH TRUTH AND REAL
-              MOMENTS.
-            </h2>
+          <div class="relative z-10">
+            <!-- Section tag -->
+            <div class="section-tag mb-6">
+              <span class="dot bg-brand"></span>
+              <span class="text-ink-faint font-primary">Our Story</span>
+            </div>
 
-            <div
-              class="flex flex-col col-span-12 md:col-span-4 justify-between"
-            >
-              <div
-                class="flex flex-col space-y-6 text-[#141313] font-primary text-md leading-md"
-              >
-                <p>
-                  ONE VISION DRIVES <br />
-                  EVERY FRAME WE CAPTURE.
-                </p>
-                <ul class="space-y-1">
-                  <li class="flex items-center gap-2">
-                    <span
-                      class="dot inline-block size-[5px] bg-dark-red"
-                    ></span>
-                    AUTHENTICITY IN EVERY MOMENT
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <span
-                      class="dot inline-block size-[5px] bg-dark-red"
-                    ></span>
-                    CINEMATIC WEDDING FILMS
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <span
-                      class="dot inline-block size-[5px] bg-dark-red"
-                    ></span>
-                    DESTINATION PHOTOGRAPHY
-                  </li>
-                  <li class="flex items-center gap-2">
-                    <span
-                      class="dot inline-block size-[5px] bg-dark-red"
-                    ></span>
-                    MEMORIES THAT LAST GENERATIONS
-                  </li>
-                </ul>
+            <div class="grid gap-8 md:gap-0 grid-cols-12">
+              <h2 id="about-heading"
+                class="font-secondary max-w-[850px] text-[22px] leading-[28px] sm:text-[30px] sm:leading-[36px] md:text-[40px] md:leading-[46px] col-span-12 md:col-span-8 text-ink">
+                SR FILM IS A WEDDING & DESTINATION PHOTOGRAPHY STUDIO GUIDED BY EMOTION AND LIGHT. EACH FRAME IS SHAPED THROUGH TRUTH AND REAL MOMENTS.
+              </h2>
+
+              <div class="flex flex-col col-span-12 md:col-span-4 justify-between md:pl-8">
+                <div class="flex flex-col space-y-5 text-ink font-primary text-md leading-md">
+                  <p class="font-medium uppercase">ONE VISION DRIVES <br />EVERY FRAME WE CAPTURE.</p>
+                  <ul class="space-y-2">
+                    <li class="flex items-center gap-2"><span class="inline-block size-[5px] rounded-full bg-brand shrink-0"></span>AUTHENTICITY IN EVERY MOMENT</li>
+                    <li class="flex items-center gap-2"><span class="inline-block size-[5px] rounded-full bg-brand shrink-0"></span>CINEMATIC WEDDING FILMS</li>
+                    <li class="flex items-center gap-2"><span class="inline-block size-[5px] rounded-full bg-brand shrink-0"></span>DESTINATION PHOTOGRAPHY</li>
+                    <li class="flex items-center gap-2"><span class="inline-block size-[5px] rounded-full bg-brand shrink-0"></span>MEMORIES THAT LAST GENERATIONS</li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Media Grid — Stamp Style -->
-          <div class="mt-10 relative overflow-hidden">
             <!-- Stamp cards -->
-            <div
-              class="relative z-[1] flex gap-6 md:gap-10 md:justify-center overflow-x-auto pb-6"
-              style="scrollbar-width: none; -ms-overflow-style: none"
-            >
-              <!-- Card 1 — Wedding -->
-              <div
-                class="shrink-0 flex flex-col items-start"
-                style="
-                  transform: rotate(-3deg);
-                  transform-origin: bottom center;
-                "
-              >
-                <div class="relative w-[200px] h-[268px]">
-                  <div class="absolute inset-[14px] overflow-hidden z-[2]">
-                    <img
-                      class="w-full h-full object-cover"
-                      src="./assets/image/image-92.webp"
-                      alt="Wedding Photography"
-                    />
+            <div class="mt-10 relative overflow-hidden">
+              <div class="relative z-[1] flex gap-6 md:gap-10 md:justify-center overflow-x-auto pb-6" style="scrollbar-width:none;-ms-overflow-style:none">
+                <div class="shrink-0 flex flex-col items-start" style="transform:rotate(-3deg);transform-origin:bottom center">
+                  <div class="relative w-[200px] h-[268px]">
+                    <div class="absolute inset-[14px] overflow-hidden z-[2]"><img class="w-full h-full object-cover" src="./assets/image/image-92.webp" alt="Wedding Photography" /></div>
+                    <img src="./assets/frame/frame-four.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none z-[1]" alt="" aria-hidden="true" />
                   </div>
-                  <img
-                    src="./assets/frame/frame-four.svg"
-                    class="absolute inset-0 w-full h-full object-fill pointer-events-none z-[1]"
-                    alt=""
-                  />
                 </div>
-              </div>
-
-              <!-- Card 2 — Destination -->
-              <div
-                class="shrink-0 flex flex-col items-start self-end mt-10"
-                style="transform: rotate(2deg); transform-origin: bottom center"
-              >
-                <div class="relative w-[200px] h-[268px]">
-                  <div class="absolute inset-[14px] overflow-hidden z-[2]">
-                    <img
-                      class="w-full h-full object-cover"
-                      src="./assets/image/image-20.webp"
-                      alt="Destination"
-                    />
+                <div class="shrink-0 flex flex-col items-start self-end mt-10" style="transform:rotate(2deg);transform-origin:bottom center">
+                  <div class="relative w-[200px] h-[268px]">
+                    <div class="absolute inset-[14px] overflow-hidden z-[2]"><img class="w-full h-full object-cover" src="./assets/image/image-20.webp" alt="Destination" /></div>
+                    <img src="./assets/frame/frame-two.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none z-[1]" alt="" aria-hidden="true" />
                   </div>
-                  <img
-                    src="./assets/frame/frame-two.svg"
-                    class="absolute inset-0 w-full h-full object-fill pointer-events-none z-[1]"
-                    alt=""
-                  />
                 </div>
-              </div>
-
-              <!-- Card 3 — Candid -->
-              <div
-                class="shrink-0 flex flex-col items-start"
-                style="
-                  transform: rotate(-1.5deg);
-                  transform-origin: bottom center;
-                "
-              >
-                <div class="relative w-[200px] h-[268px]">
-                  <div class="absolute inset-[14px] overflow-hidden z-[2]">
-                    <img
-                      class="w-full h-full object-cover"
-                      src="./assets/image/image-58.webp"
-                      alt="Candid"
-                    />
+                <div class="shrink-0 flex flex-col items-start" style="transform:rotate(-1.5deg);transform-origin:bottom center">
+                  <div class="relative w-[200px] h-[268px]">
+                    <div class="absolute inset-[14px] overflow-hidden z-[2]"><img class="w-full h-full object-cover" src="./assets/image/image-58.webp" alt="Candid" /></div>
+                    <img src="./assets/frame/farme-three.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none z-[1]" alt="" aria-hidden="true" />
                   </div>
-                  <img
-                    src="./assets/frame/farme-three.svg"
-                    class="absolute inset-0 w-full h-full object-fill pointer-events-none z-[1]"
-                    alt=""
-                  />
                 </div>
-              </div>
-
-              <!-- Card 4 — Films -->
-              <div
-                class="shrink-0 flex flex-col items-start self-end mt-10"
-                style="
-                  transform: rotate(2.5deg);
-                  transform-origin: bottom center;
-                "
-              >
-                <div class="relative w-[200px] h-[268px]">
-                  <div class="absolute inset-[14px] overflow-hidden z-[2]">
-                    <img
-                      class="w-full h-full object-cover"
-                      src="./assets/image/image-7.webp"
-                      alt="Films"
-                    />
+                <div class="shrink-0 flex flex-col items-start self-end mt-10" style="transform:rotate(2.5deg);transform-origin:bottom center">
+                  <div class="relative w-[200px] h-[268px]">
+                    <div class="absolute inset-[14px] overflow-hidden z-[2]"><img class="w-full h-full object-cover" src="./assets/image/image-7.webp" alt="Films" /></div>
+                    <img src="./assets/frame/frame-one.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none z-[1]" alt="" aria-hidden="true" />
                   </div>
-                  <img
-                    src="./assets/frame/frame-one.svg"
-                    class="absolute inset-0 w-full h-full object-fill pointer-events-none z-[1]"
-                    alt=""
-                  />
                 </div>
               </div>
             </div>
@@ -1279,730 +567,270 @@
         </div>
       </section>
 
-      <!-- GALLERY SECTION -->
-      <section id="gallery-section" class="px-2 bg-dark-red">
-        <div class="w-full rounded-[6px] overflow-hidden bg-cream">
-          <!-- Header -->
-          <div class="pt-[40px] md:pt-[64px] px-[16px] md:px-[32px]">
-            <div class="flex items-center gap-2 mb-4">
-              <span
-                class="dot inline-block size-[5px] bg-dark-red shrink-0"
-              ></span>
-              <span
-                class="font-primary text-xsm uppercase tracking-[0.2em] text-[#14131366]"
-                >Our Work</span
-              >
-            </div>
+      <!--  GALLERY SECTION -->
+      <section id="gallery-section" aria-labelledby="gallery-heading"
+        class="px-2 bg-brand pb-2">
+        <div class="w-full rounded-[6px] overflow-hidden bg-surface">
 
-            <div
-              class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6 mb-12"
-            >
-              <h2
-                class="font-secondary text-[26px] sm:text-[36px] md:text-[48px] md:leading-[52px] leading-tight uppercase text-[#141313]"
-              >
-                Visual <br />
-                Storytelling
+          <header class="pt-12 md:pt-20 px-4 md:px-8">
+            <div class="section-tag">
+              <span class="dot bg-brand"></span>
+              <span class="text-ink-faint font-primary">Our Work</span>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6 mb-10 md:mb-14">
+              <h2 id="gallery-heading"
+                class="font-secondary text-[26px] sm:text-[36px] md:text-3xl md:leading-[52px] leading-tight uppercase text-ink">
+                Visual <br />Storytelling
               </h2>
-              <p
-                class="font-primary text-sm sm:text-md text-[#14131399] leading-md md:max-w-md uppercase"
-              >
-                A glimpse into the moments we've preserved. Every image tells a
-                unique love story, captured through our cinematic lens.
+              <p class="font-primary text-sm sm:text-md text-ink-muted leading-md md:max-w-md uppercase">
+                A glimpse into the moments we've preserved. Every image tells a unique love story, captured through our cinematic lens.
               </p>
             </div>
-          </div>
+          </header>
 
-          <!-- Infinite Scrolling Gallery -->
+          <!-- Infinite Scroll Strip -->
           <div class="relative overflow-hidden">
-            <img
-              class="absolute top-frame translate-y-[40%] z-[99] top-0 left-0 w-full"
-              src="https://framerusercontent.com/images/lo76tuhSgb59Q3kfnnUEyTXHqg.png?width=3600&height=150"
-              alt=""
-            />
-            <img
-              class="absolute bottom-0 z-[99] -translate-y-[40%] left-0 w-full"
-              src="https://framerusercontent.com/images/lo76tuhSgb59Q3kfnnUEyTXHqg.png?width=3600&height=150"
-              alt=""
-            />
-
-            <div
-              class="gallery-wrapper py-6 relative overflow-hidden scrollbar-hide w-full"
-            >
-              <div
-                class="gallery-track flex gap-3 sm:gap-4 md:gap-6 w-max"
-                id="galleryTrack"
-              >
-                <!-- Image 1 -->
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-1.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <!-- Image 2 -->
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-2.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <!-- Image 3 -->
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-20.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <!-- Image 4 -->
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-39.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <!-- Image 5 -->
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-58.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <!-- Image 6 -->
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-7.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <!-- Duplicates for infinite loop -->
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-1.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-2.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-20.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-39.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-58.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <div
-                  class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"
-                >
-                  <img
-                    src="./assets/image/image-7.webp"
-                    alt="Gallery"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
+            <img class="absolute translate-y-[40%] rotate-[-180deg] z-[99] top-0 left-0 w-full pointer-events-none"
+              src="https://framerusercontent.com/images/lo76tuhSgb59Q3kfnnUEyTXHqg.png?width=3600&height=150" alt="" aria-hidden="true" />
+            <img class="absolute bottom-0 z-[99] -translate-y-[40%] left-0 w-full pointer-events-none"
+              src="https://framerusercontent.com/images/lo76tuhSgb59Q3kfnnUEyTXHqg.png?width=3600&height=150" alt="" aria-hidden="true" />
+            <div class="py-6 relative overflow-hidden w-full">
+              <div class="gallery-track flex gap-4 md:gap-6 w-max" id="galleryTrack">
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-1.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-2.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-20.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-39.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-58.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-7.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <!-- Duplicate for loop -->
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-1.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-2.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-20.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-39.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-58.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
+                <div class="shrink-0 h-[250px] sm:h-[300px] md:h-[400px] w-[180px] sm:w-[220px] md:w-[350px] rounded-[6px] overflow-hidden group cursor-pointer"><img src="./assets/image/image-7.webp" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" /></div>
               </div>
             </div>
           </div>
 
-          <style>
-            @keyframes scroll-infinite {
-              0% {
-                transform: translateX(0);
-              }
-              100% {
-                transform: translateX(-50%);
-              }
-            }
-
-            .gallery-track {
-              animation: scroll-infinite 10s linear infinite;
-            }
-          </style>
-
-          <!-- CTA Section -->
-          <div
-            class="px-[16px] md:px-[32px] py-[40px] md:py-[64px] flex flex-col md:flex-row md:items-center md:justify-between gap-8"
-          >
+          <!-- Gallery CTA -->
+          <div class="px-4 md:px-8 py-12 md:py-16 flex flex-col md:flex-row md:items-center md:justify-between gap-8 ">
             <div>
-              <h3
-                class="font-secondary text-[20px] md:text-[28px] leading-tight uppercase text-[#141313] mb-3"
-              >
-                Ready to Capture Your Story?
-              </h3>
-              <p
-                class="font-primary text-sm md:text-md text-[#14131399] uppercase"
-              >
-                Let's create timeless memories together. Book your session
-                today.
-              </p>
+              <h3 class="font-secondary text-xl md:text-xl leading-tight uppercase text-ink mb-2">Ready to Capture Your Story?</h3>
+              <p class="font-primary text-sm md:text-md text-ink-muted uppercase">Let's create timeless memories together. Book your session today.</p>
             </div>
-            <a
-              href="https://wa.me/918767591139?text=Hi%20SR%20Film%20Photography,%20I%20am%20interested%20in%20booking%20a%20photography%20session.%20Could%20you%20please%20share%20more%20details%20about%20your%20packages%20and%20availability?"
-              target="_blank"
-            >
-              <button
-                class="uppercase text-[#faf5eb] rounded-[100px] px-[32px] py-[20px] bg-dark-red font-primary text-sm leading-sm whitespace-nowrap hover:bg-[#6b1f1a] transition-colors duration-300"
-              >
-                Book Session
-              </button>
+            <a href="https://wa.me/918767591139?text=Hi%20SR%20Film%20Photography,%20I%20am%20interested%20in%20booking%20a%20photography%20session.%20Could%20you%20please%20share%20more%20details%20about%20your%20packages%20and%20availability?" target="_blank" rel="noopener noreferrer"
+              class="inline-block uppercase text-surface rounded-[100px] px-8 py-5 bg-brand font-primary text-sm leading-sm whitespace-nowrap hover:bg-brand-dark transition-colors duration-300">
+              Book Session
             </a>
           </div>
         </div>
       </section>
 
-      <!-- FILMS / PORTFOLIO SECTION -->
-      <section
-        id="portfolio"
-        class="relative overflow-hidden z-[20] bg-dark-red py-[40px] md:py-[64px]"
-        data-scroll-section
-      >
+      <!--  FILMS / PORTFOLIO SECTION -->
+      <section id="portfolio" aria-labelledby="portfolio-heading"
+        class="relative overflow-hidden z-[20] bg-brand py-12 md:py-20">
         <div class="px-2">
-          <div class="w-full rounded-[6px] bg-dark-red overflow-hidden">
-            <!-- Header -->
-            <div
-              class="text-center pt-[40px] md:pt-[64px] pb-[32px] md:pb-[48px] px-[16px] md:px-[32px]"
-            >
-              <div class="flex items-center gap-2 mb-4 justify-center">
-                <span
-                  class="dot inline-block size-[5px] bg-cream shrink-0"
-                ></span>
-                <span
-                  class="font-primary text-xsm uppercase tracking-[0.2em] text-[#faf5eb99]"
-                  >Portfolio</span
-                >
+          <div class="w-full rounded-[6px] bg-brand overflow-hidden">
+
+            <header class="text-center pt-12 md:pt-20 pb-8 md:pb-12 px-4 md:px-8">
+              <div class="section-tag justify-center">
+                <span class="dot bg-surface"></span>
+                <span class="text-cream-ghost font-primary">Portfolio</span>
               </div>
-              <h2
-                class="font-secondary text-[26px] sm:text-[36px] md:text-[48px] md:leading-[52px] leading-tight uppercase text-cream"
-              >
-                Beautiful Weddings, <br />
-                Breathtaking Films
+              <h2 id="portfolio-heading"
+                class="font-secondary text-[26px] sm:text-[36px] md:text-3xl md:leading-[52px] leading-tight uppercase text-surface">
+                Beautiful Weddings, <br />Breathtaking Films
               </h2>
-            </div>
+            </header>
 
             <!-- Swiper Carousel -->
-            <div class="relative pb-[40px] md:pb-[64px]">
+            <div class="relative pb-10 md:pb-16">
               <div class="swiper filmsSwiper overflow-visible">
                 <div class="swiper-wrapper items-stretch gap-4">
-                  <!-- Slide 1 - Nishant & Priya with Frame One -->
-                  <div
-                    class="swiper-slide rotate-[-3deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4"
-                  >
-                    <div
-                      class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px] flex items-center justify-center"
-                    >
+                  <div class="swiper-slide rotate-[-3deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4">
+                    <div class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px]">
                       <div class="relative w-full h-full">
-                        <img
-                          src="./assets/frame/frame-one.svg"
-                          class="absolute inset-0 w-full h-full object-fill pointer-events-none"
-                          alt=""
-                        />
+                        <img src="./assets/frame/frame-one.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none" alt="" aria-hidden="true" />
                         <div class="absolute z-[2] h-full w-full p-8">
                           <div class="relative w-full h-full">
-                            <img
-                              src="assets/image/image-60.webp"
-                              class="w-full h-full object-cover"
-                              alt="Nishant & Priya"
-                            />
-                            <div
-                              class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
-                            ></div>
-                            <h3
-                              class="absolute bottom-6 font-secondary left-0 right-0 text-center text-cream text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]"
-                            >
-                              Nishant
-                              <span class="font-secondary">&</span> Priya
-                            </h3>
+                            <img src="assets/image/image-60.webp" class="w-full h-full object-cover" alt="Nishant & Priya" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <h3 class="absolute bottom-6 font-secondary left-0 right-0 text-center text-surface text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]">Nishant <span>&</span> Priya</h3>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <!-- Slide 2 - Rohan & Simran with Frame Two -->
-                  <div
-                    class="swiper-slide rotate-[2deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4"
-                  >
-                    <div
-                      class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px] flex items-center justify-center"
-                    >
+                  <div class="swiper-slide rotate-[2deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4">
+                    <div class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px]">
                       <div class="relative w-full h-full">
-                        <img
-                          src="./assets/frame/frame-two.svg"
-                          class="absolute inset-0 w-full h-full object-fill pointer-events-none"
-                          alt=""
-                        />
+                        <img src="./assets/frame/frame-two.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none" alt="" aria-hidden="true" />
                         <div class="absolute z-[2] h-full w-full p-8">
                           <div class="relative w-full h-full">
-                            <img
-                              src="assets/image/image-27.webp"
-                              class="w-full h-full object-cover"
-                              alt="Rohan & Simran"
-                            />
-                            <div
-                              class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
-                            ></div>
-                            <h3
-                              class="absolute bottom-6 font-secondary left-0 right-0 text-center text-cream text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]"
-                            >
-                              Rohan <span class="font-secondary">&</span> Simran
-                            </h3>
+                            <img src="assets/image/image-27.webp" class="w-full h-full object-cover" alt="Rohan & Simran" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <h3 class="absolute bottom-6 font-secondary left-0 right-0 text-center text-surface text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]">Rohan <span>&</span> Simran</h3>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <!-- Slide 3 - Arjun & Meera with Frame Three -->
-                  <div
-                    class="swiper-slide rotate-[-1.5deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4"
-                  >
-                    <div
-                      class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px] flex items-center justify-center"
-                    >
+                  <div class="swiper-slide rotate-[-1.5deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4">
+                    <div class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px]">
                       <div class="relative w-full h-full">
-                        <img
-                          src="./assets/frame/farme-three.svg"
-                          class="absolute inset-0 w-full h-full object-fill pointer-events-none"
-                          alt=""
-                        />
+                        <img src="./assets/frame/farme-three.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none" alt="" aria-hidden="true" />
                         <div class="absolute z-[2] h-full w-full p-8">
                           <div class="relative w-full h-full">
-                            <img
-                              src="assets/image/image-48.webp"
-                              class="w-full h-full object-cover"
-                              alt="Arjun & Meera"
-                            />
-                            <div
-                              class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
-                            ></div>
-                            <h3
-                              class="absolute bottom-6 font-secondary left-0 right-0 text-center text-cream text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]"
-                            >
-                              Arjun <span class="font-secondary">&</span> Meera
-                            </h3>
+                            <img src="assets/image/image-48.webp" class="w-full h-full object-cover" alt="Arjun & Meera" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <h3 class="absolute bottom-6 font-secondary left-0 right-0 text-center text-surface text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]">Arjun <span>&</span> Meera</h3>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <!-- Slide 4 - Dev & Ananya with Frame Four -->
-                  <div
-                    class="swiper-slide rotate-[2.5deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4"
-                  >
-                    <div
-                      class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px] flex items-center justify-center"
-                    >
+                  <div class="swiper-slide rotate-[2.5deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4">
+                    <div class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px]">
                       <div class="relative w-full h-full">
-                        <img
-                          src="./assets/frame/frame-four.svg"
-                          class="absolute inset-0 w-full h-full object-fill pointer-events-none"
-                          alt=""
-                        />
+                        <img src="./assets/frame/frame-four.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none" alt="" aria-hidden="true" />
                         <div class="absolute z-[2] h-full w-full p-8">
                           <div class="relative w-full h-full">
-                            <img
-                              src="assets/image/image-90.webp"
-                              class="w-full h-full object-cover"
-                              alt="Dev & Ananya"
-                            />
-                            <div
-                              class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
-                            ></div>
-                            <h3
-                              class="absolute bottom-6 font-secondary left-0 right-0 text-center text-cream text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]"
-                            >
-                              Dev <span class="font-secondary">&</span> Ananya
-                            </h3>
+                            <img src="assets/image/image-90.webp" class="w-full h-full object-cover" alt="Dev & Ananya" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <h3 class="absolute bottom-6 font-secondary left-0 right-0 text-center text-surface text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]">Dev <span>&</span> Ananya</h3>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <!-- Slide 5 - Kabir & Zara with Frame One (alternating) -->
-                  <div
-                    class="swiper-slide rotate-[-2deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4"
-                  >
-                    <div
-                      class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px] flex items-center justify-center"
-                    >
+                  <div class="swiper-slide rotate-[-2deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4">
+                    <div class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px]">
                       <div class="relative w-full h-full">
-                        <img
-                          src="./assets/frame/frame-one.svg"
-                          class="absolute inset-0 w-full h-full object-fill pointer-events-none"
-                          alt=""
-                        />
+                        <img src="./assets/frame/frame-one.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none" alt="" aria-hidden="true" />
                         <div class="absolute z-[2] h-full w-full p-8">
                           <div class="relative w-full h-full">
-                            <img
-                              src="assets/image/image-83.webp"
-                              class="w-full h-full object-cover"
-                              alt="Kabir & Zara"
-                            />
-                            <div
-                              class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
-                            ></div>
-                            <h3
-                              class="absolute bottom-6 font-secondary left-0 right-0 text-center text-cream text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]"
-                            >
-                              Kabir <span class="font-secondary">&</span> Zara
-                            </h3>
+                            <img src="assets/image/image-83.webp" class="w-full h-full object-cover" alt="Kabir & Zara" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <h3 class="absolute bottom-6 font-secondary left-0 right-0 text-center text-surface text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]">Kabir <span>&</span> Zara</h3>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-
-
-                   <!-- Slide 6 - Kabir & Zara with Frame One (alternating) -->
-                  <div
-                    class="swiper-slide rotate-[2deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4"
-                  >
-                    <div
-                      class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px] flex items-center justify-center"
-                    >
+                  <div class="swiper-slide rotate-[2deg] !w-[260px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px] flex flex-col !gap-4">
+                    <div class="relative rounded-[8px] overflow-hidden h-[380px] sm:!h-[420px] md:!h-[500px]">
                       <div class="relative w-full h-full">
-                        <img
-                          src="./assets/frame/frame-one.svg"
-                          class="absolute inset-0 w-full h-full object-fill pointer-events-none"
-                          alt=""
-                        />
+                        <img src="./assets/frame/frame-two.svg" class="absolute inset-0 w-full h-full object-fill pointer-events-none" alt="" aria-hidden="true" />
                         <div class="absolute z-[2] h-full w-full p-8">
                           <div class="relative w-full h-full">
-                            <img
-                              src="assets/image/image-38.webp"
-                              class="w-full h-full object-cover"
-                              alt="Kabir & Zara"
-                            />
-                            <div
-                              class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
-                            ></div>
-                            <h3
-                              class="absolute bottom-6 font-secondary left-0 right-0 text-center text-cream text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]"
-                            >
-                              Satish <span class="font-secondary">&</span> Akirti
-                            </h3>
+                            <img src="assets/image/image-38.webp" class="w-full h-full object-cover" alt="Satish & Akirti" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            <h3 class="absolute bottom-6 font-secondary left-0 right-0 text-center text-surface text-[24px] sm:text-[28px] md:text-[32px] font-normal uppercase z-[5]">Satish <span>&</span> Akirti</h3>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-
-                  
                 </div>
               </div>
-
-              <!-- Navigation Buttons -->
-              <button
-                class="films-prev absolute left-1 md:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-cream hover:bg-[#f0ebe3] transition-colors duration-300 flex items-center justify-center text-dark-red font-bold text-lg"
-              >
-                <i data-lucide="arrow-left"></i>
-              </button>
-              <button
-                class="films-next absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-cream hover:bg-[#f0ebe3] transition-colors duration-300 flex items-center justify-center text-dark-red font-bold text-lg"
-              >
-                <i data-lucide="arrow-right"></i>
-              </button>
+              <button class="films-prev absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-surface hover:bg-surface-dim transition-colors duration-300 flex items-center justify-center text-brand"><i data-lucide="arrow-left" class="w-4 h-4"></i></button>
+              <button class="films-next absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-surface hover:bg-surface-dim transition-colors duration-300 flex items-center justify-center text-brand"><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
             </div>
 
-            <!-- Bottom CTA -->
-            <div
-              class="px-[16px] md:px-[32px] py-[40px] md:py-[64px] flex flex-col md:flex-row md:items-center md:justify-between gap-8"
-            >
+            <!-- Portfolio CTA -->
+            <div class="px-4 md:px-8 py-12 md:py-16 flex flex-col md:flex-row md:items-center md:justify-between gap-8 border-t border-surface/10">
               <div>
-                <h3
-                  class="font-secondary text-[20px] md:text-[28px] leading-tight uppercase text-cream mb-3"
-                >
-                  Ready to See More?
-                </h3>
-                <p
-                  class="font-primary text-sm md:text-md text-[#faf5eb99] uppercase"
-                >
-                  Explore our complete portfolio of cinematic wedding films and
-                  photography.
-                </p>
+                <h3 class="font-secondary text-xl md:text-xl leading-tight uppercase text-surface mb-2">Ready to See More?</h3>
+                <p class="font-primary text-sm md:text-md text-cream-ghost uppercase">Explore our complete portfolio of cinematic wedding films and photography.</p>
               </div>
-              <button
-                class="uppercase text-dark-red rounded-[100px] px-[32px] py-[20px] bg-cream font-primary text-sm leading-sm whitespace-nowrap hover:bg-[#f0ebe3] transition-colors duration-300"
-              >
-                View All Films
-              </button>
+              <button class="uppercase text-brand rounded-[100px] px-8 py-5 bg-surface font-primary text-sm leading-sm whitespace-nowrap hover:bg-surface-dim transition-colors duration-300">View All Films</button>
             </div>
           </div>
         </div>
       </section>
 
       <!-- TESTIMONIALS SECTION -->
-      <section
-        id="testimonials"
-        class="relative z-[12] overflow-hidden bg-dark-red"
-        data-scroll-section
-      >
+      <section id="testimonials" aria-labelledby="testimonials-heading"
+        class="relative z-[12] overflow-hidden bg-brand pb-2">
         <div class="px-2 w-full">
-          <div
-            class="w-full rounded-[6px] bg-cream overflow-hidden px-[16px] md:px-[32px] py-[80px] md:py-[120px]"
-          >
-            <div
-              class="flex flex-col lg:flex-row gap-8 lg:gap-16 flex-wrap md:flex-nowrap"
-            >
+          <div class="w-full rounded-[6px] bg-surface overflow-hidden px-4 md:px-8 py-16 md:py-24">
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-16 flex-wrap md:flex-nowrap">
+
               <!-- LEFT -->
-              <div
-                class="flex flex-col gap-8 lg:gap-12 w-full lg:w-2/3 justify-between overflow-hidden"
-              >
-                <div
-                  class="flex items-start sm:items-end justify-between gap-4 flex-wrap"
-                >
+              <div class="flex flex-col gap-8 lg:gap-12 w-full lg:w-2/3 justify-between overflow-hidden">
+                <div class="flex items-start sm:items-end justify-between gap-4 flex-wrap">
                   <div>
-                    <div class="flex items-center gap-2 mb-4">
-                      <span
-                        class="dot inline-block size-[5px] bg-dark-red shrink-0"
-                      ></span>
-                      <span
-                        class="font-primary text-xsm uppercase tracking-[0.2em] text-[#14131366]"
-                        >Testimonials</span
-                      >
+                    <div class="section-tag">
+                      <span class="dot bg-brand"></span>
+                      <span class="text-ink-faint font-primary">Testimonials</span>
                     </div>
-                    <h2
-                      class="text-[28px] sm:text-[36px] lg:text-[48px] leading-tight font-secondary uppercase text-[#141313]"
-                    >
-                      Love Stories <br />
-                      Our Couples Say
+                    <h2 id="testimonials-heading"
+                      class="text-[28px] sm:text-[36px] lg:text-3xl leading-tight font-secondary uppercase text-ink">
+                      Love Stories <br />Our Couples Say
                     </h2>
                   </div>
                   <div class="flex items-center gap-3">
-                    <div
-                      class="carousel-left w-10 h-10 bg-dark-red rounded-full flex items-center justify-center cursor-pointer hover:bg-[#6b1f1a] transition-colors duration-300"
-                    >
-                      <span class="text-cream font-bold text-lg">←</span>
-                    </div>
-                    <div
-                      class="carousel-right w-10 h-10 bg-dark-red rounded-full flex items-center justify-center cursor-pointer hover:bg-[#6b1f1a] transition-colors duration-300"
-                    >
-                      <span class="text-cream font-bold text-lg">→</span>
-                    </div>
+                    <button class="carousel-left w-10 h-10 bg-brand rounded-full flex items-center justify-center cursor-pointer hover:bg-brand-dark transition-colors duration-300" aria-label="Previous testimonial">
+                      <i class="ri-arrow-left-line text-surface text-lg"></i>
+                    </button>
+                    <button class="carousel-right w-10 h-10 bg-brand rounded-full flex items-center justify-center cursor-pointer hover:bg-brand-dark transition-colors duration-300" aria-label="Next testimonial">
+                      <i class="ri-arrow-right-line text-surface text-lg"></i>
+                    </button>
                   </div>
                 </div>
 
                 <div class="swiper mySwiper testimonial-swiper overflow-hidden">
                   <div class="swiper-wrapper">
-                    <div
-                      class="swiper-slide !bg-[#faf5eb99] !rounded-[12px] !p-6 !flex !flex-col !justify-between min-h-[240px] border border-[#14131333]"
-                    >
+                    <div class="swiper-slide !bg-surface/60 !rounded-xl !p-6 !flex !flex-col !justify-between min-h-[240px] border border-ink-faint/20">
                       <div class="flex flex-col gap-3">
-                        <div class="flex gap-1">
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                        </div>
-                        <p
-                          class="text-[#14131399] text-sm md:text-md leading-relaxed font-primary"
-                        >
-                          Our wedding photos turned out absolutely magical.
-                          Every moment was captured so naturally and
-                          beautifully. We couldn't have asked for a better
-                          experience!
-                        </p>
+                        <div class="flex gap-0.5 text-brand">★★★★★</div>
+                        <p class="text-ink-muted text-sm md:text-md leading-relaxed font-primary">Our wedding photos turned out absolutely magical. Every moment was captured so naturally and beautifully. We couldn't have asked for a better experience!</p>
                       </div>
                       <div class="flex items-center gap-3 mt-6">
-                        <img
-                          src="https://lh3.googleusercontent.com/a-/ALV-UjXjJRaPtAHqavR_kvY46i-C5QbUqfi4EubHGTYE_6eHx51ssedG=w72-h72-p-rp-mo-br100"
-                          alt="Riya"
-                          class="w-10 h-10 rounded-full object-cover"
-                        />
+                        <img src="https://lh3.googleusercontent.com/a-/ALV-UjXjJRaPtAHqavR_kvY46i-C5QbUqfi4EubHGTYE_6eHx51ssedG=w72-h72-p-rp-mo-br100" alt="Riya" class="w-10 h-10 rounded-full object-cover" />
                         <div>
-                          <h5
-                            class="text-[#141313] text-sm font-secondary uppercase"
-                          >
-                            Riya <span class="font-secondary">&</span> Arjun
-                          </h5>
-                          <p
-                            class="text-[#14131366] text-xs font-primary uppercase"
-                          >
-                            Wedding Couple
-                          </p>
+                          <h5 class="text-ink text-sm font-secondary uppercase">Riya <span>&</span> Arjun</h5>
+                          <p class="text-ink-faint text-xs font-primary uppercase">Wedding Couple</p>
                         </div>
                       </div>
                     </div>
-
-                    <div
-                      class="swiper-slide !bg-[#faf5eb99] !rounded-[12px] !p-6 !flex !flex-col !justify-between min-h-[240px] border border-[#14131333]"
-                    >
+                    <div class="swiper-slide !bg-surface/60 !rounded-xl !p-6 !flex !flex-col !justify-between min-h-[240px] border border-ink-faint/20">
                       <div class="flex flex-col gap-3">
-                        <div class="flex gap-1">
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                        </div>
-                        <p
-                          class="text-[#14131399] text-sm md:text-md leading-relaxed font-primary"
-                        >
-                          The cinematic video felt like a movie of our love
-                          story. Every detail was captured so perfectly — highly
-                          recommended!
-                        </p>
+                        <div class="flex gap-0.5 text-brand">★★★★★</div>
+                        <p class="text-ink-muted text-sm md:text-md leading-relaxed font-primary">The cinematic video felt like a movie of our love story. Every detail was captured so perfectly — highly recommended!</p>
                       </div>
                       <div class="flex items-center gap-3 mt-6">
-                        <img
-                          src="https://lh3.googleusercontent.com/a-/ALV-UjWFU_SKrxF1OVifAN6C5PfuBjwq5PuSfsifeXDbvrDP-fG_ZJiP=w72-h72-p-rp-mo-br100"
-                          alt="Neha"
-                          class="w-10 h-10 rounded-full object-cover"
-                        />
+                        <img src="https://lh3.googleusercontent.com/a-/ALV-UjWFU_SKrxF1OVifAN6C5PfuBjwq5PuSfsifeXDbvrDP-fG_ZJiP=w72-h72-p-rp-mo-br100" alt="Neha" class="w-10 h-10 rounded-full object-cover" />
                         <div>
-                          <h5
-                            class="text-[#141313] text-sm font-secondary uppercase"
-                          >
-                            Neha <span class="font-secondary">&</span> Karan
-                          </h5>
-                          <p
-                            class="text-[#14131366] text-xs font-primary uppercase"
-                          >
-                            Wedding Couple
-                          </p>
+                          <h5 class="text-ink text-sm font-secondary uppercase">Neha <span>&</span> Karan</h5>
+                          <p class="text-ink-faint text-xs font-primary uppercase">Wedding Couple</p>
                         </div>
                       </div>
                     </div>
-
-                    <div
-                      class="swiper-slide !bg-[#faf5eb99] !rounded-[12px] !p-6 !flex !flex-col !justify-between min-h-[240px] border border-[#14131333]"
-                    >
+                    <div class="swiper-slide !bg-surface/60 !rounded-xl !p-6 !flex !flex-col !justify-between min-h-[240px] border border-ink-faint/20">
                       <div class="flex flex-col gap-3">
-                        <div class="flex gap-1">
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                        </div>
-                        <p
-                          class="text-[#14131399] text-sm md:text-md leading-relaxed font-primary"
-                        >
-                          From pre-wedding shoot to final album, everything was
-                          smooth and professional. The photos are beyond
-                          perfect.
-                        </p>
+                        <div class="flex gap-0.5 text-brand">★★★★★</div>
+                        <p class="text-ink-muted text-sm md:text-md leading-relaxed font-primary">From pre-wedding shoot to final album, everything was smooth and professional. The photos are beyond perfect.</p>
                       </div>
                       <div class="flex items-center gap-3 mt-6">
-                        <img
-                          src="https://lh3.googleusercontent.com/a-/ALV-UjVhTd50oCMlMDUZkv0UiGH-hIgFYV2ZRJLN5LIHGrgf4wQ0aBF2=w72-h72-p-rp-mo-ba2-br100"
-                          alt="Priya"
-                          class="w-10 h-10 rounded-full object-cover"
-                        />
+                        <img src="https://lh3.googleusercontent.com/a-/ALV-UjVhTd50oCMlMDUZkv0UiGH-hIgFYV2ZRJLN5LIHGrgf4wQ0aBF2=w72-h72-p-rp-mo-ba2-br100" alt="Priya" class="w-10 h-10 rounded-full object-cover" />
                         <div>
-                          <h5
-                            class="text-[#141313] text-sm font-secondary uppercase"
-                          >
-                            Priya <span class="font-secondary">&</span> Rohit
-                          </h5>
-                          <p
-                            class="text-[#14131366] text-xs font-primary uppercase"
-                          >
-                            Wedding Couple
-                          </p>
+                          <h5 class="text-ink text-sm font-secondary uppercase">Priya <span>&</span> Rohit</h5>
+                          <p class="text-ink-faint text-xs font-primary uppercase">Wedding Couple</p>
                         </div>
                       </div>
                     </div>
-
-                    <div
-                      class="swiper-slide !bg-[#faf5eb99] !rounded-[12px] !p-6 !flex !flex-col !justify-between min-h-[240px] border border-[#14131333]"
-                    >
+                    <div class="swiper-slide !bg-surface/60 !rounded-xl !p-6 !flex !flex-col !justify-between min-h-[240px] border border-ink-faint/20">
                       <div class="flex flex-col gap-3">
-                        <div class="flex gap-1">
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                          <span class="text-dark-red text-lg">★</span>
-                        </div>
-                        <p
-                          class="text-[#14131399] text-sm md:text-md leading-relaxed font-primary"
-                        >
-                          They didn't just take photos — they captured emotions,
-                          laughter, and our entire journey beautifully.
-                        </p>
+                        <div class="flex gap-0.5 text-brand">★★★★★</div>
+                        <p class="text-ink-muted text-sm md:text-md leading-relaxed font-primary">They didn't just take photos — they captured emotions, laughter, and our entire journey beautifully.</p>
                       </div>
                       <div class="flex items-center gap-3 mt-6">
-                        <img
-                          src="https://lh3.googleusercontent.com/a-/ALV-UjWl1J7UF2Ungdpix-RnhIaevqCa4tAoIGJqD0mF3HMYR49a1F2E=w72-h72-p-rp-mo-br100"
-                          alt="Ananya"
-                          class="w-10 h-10 rounded-full object-cover"
-                        />
+                        <img src="https://lh3.googleusercontent.com/a-/ALV-UjWl1J7UF2Ungdpix-RnhIaevqCa4tAoIGJqD0mF3HMYR49a1F2E=w72-h72-p-rp-mo-br100" alt="Ananya" class="w-10 h-10 rounded-full object-cover" />
                         <div>
-                          <h5
-                            class="text-[#141313] text-sm font-secondary uppercase"
-                          >
-                            Ananya
-                            <span class="font-secondary">&</span> Siddharth
-                          </h5>
-                          <p
-                            class="text-[#14131366] text-xs font-primary uppercase"
-                          >
-                            Wedding Couple
-                          </p>
+                          <h5 class="text-ink text-sm font-secondary uppercase">Ananya <span>&</span> Siddharth</h5>
+                          <p class="text-ink-faint text-xs font-primary uppercase">Wedding Couple</p>
                         </div>
                       </div>
                     </div>
@@ -2011,35 +839,14 @@
               </div>
 
               <!-- RIGHT -->
-              <div
-                class="w-full lg:w-[35%] rounded-[8px] overflow-hidden relative h-[500px]"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1722952934708-749c22eb2e58?q=80&w=987&auto=format&fit=crop"
-                  alt="Wedding couple"
-                  class="w-full h-full object-cover absolute inset-0"
-                />
+              <div class="w-full lg:w-[35%] rounded-xl overflow-hidden relative h-[500px]">
+                <img src="https://images.unsplash.com/photo-1722952934708-749c22eb2e58?q=80&w=987&auto=format&fit=crop"
+                  alt="Wedding couple" class="w-full h-full object-cover absolute inset-0" />
                 <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                  <div
-                    class="rounded-[12px] p-5 sm:p-6 flex flex-col items-center gap-2 bg-dark-red/90 backdrop-blur-sm"
-                  >
-                    <h4
-                      class="text-cream text-[40px] sm:text-[48px] leading-tight font-normal font-secondary"
-                    >
-                      5.0
-                    </h4>
-                    <div class="flex gap-1">
-                      <span class="text-cream text-lg">★</span>
-                      <span class="text-cream text-lg">★</span>
-                      <span class="text-cream text-lg">★</span>
-                      <span class="text-cream text-lg">★</span>
-                      <span class="text-cream text-lg">★</span>
-                    </div>
-                    <p
-                      class="text-cream text-xs font-primary tracking-widest uppercase"
-                    >
-                      Couples Rating
-                    </p>
+                  <div class="rounded-xl p-5 sm:p-6 flex flex-col items-center gap-2 bg-brand/90 backdrop-blur-sm">
+                    <h4 class="text-surface text-[48px] leading-tight font-normal font-secondary">5.0</h4>
+                    <div class="flex gap-0.5 text-surface text-lg">★★★★★</div>
+                    <p class="text-surface/70 text-xs font-primary tracking-widest uppercase">Couples Rating</p>
                   </div>
                 </div>
               </div>
@@ -2048,529 +855,194 @@
         </div>
       </section>
 
-      <!-- Testimonials Swiper Script -->
       <script>
         document.addEventListener("DOMContentLoaded", function () {
-          const testimonialSwiper = new Swiper(".testimonial-swiper", {
-            loop: true,
-            slidesPerView: 1,
-            spaceBetween: 20,
-            autoplay: false,
-            speed: 600,
-            breakpoints: {
-              640: {
-                slidesPerView: 1.3,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 2,
-                spaceBetween: 24,
-              },
-            },
-            navigation: {
-              nextEl: ".carousel-right",
-              prevEl: ".carousel-left",
-            },
+          new Swiper(".testimonial-swiper", {
+            loop: true, slidesPerView: 1, spaceBetween: 20, speed: 600,
+            breakpoints: { 640: { slidesPerView: 1.3, spaceBetween: 20 }, 1024: { slidesPerView: 2, spaceBetween: 24 } },
+            navigation: { nextEl: ".carousel-right", prevEl: ".carousel-left" },
           });
         });
       </script>
 
-      <section
-        class="w-full relative overflow-hidden pt-12"
-        style="background-color: #8c2923"
-      >
-        <!-- Subtle Background Decorative Accent (Adds Depth) -->
-        <div
-          class="absolute inset-0 opacity-[0.02] pointer-events-none select-none flex items-center justify-center"
-        >
-          <span class="font-secondary text-[50vw] text-[#faf5eb] leading-none"
-            >SR</span
-          >
-        </div>
+    
 
-        <footer
-          id="footer-section"
-          class="w-full relative z-10 flex flex-col justify-between px-6 sm:px-12 lg:px-16 py-16 pb-8 text-[#faf5eb]"
-        >
-          <!-- UPPER EXPERENTIAL GRID -->
-          <div
-            class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-stretch pb-16 border-b border-[#faf5eb]/10"
-          >
-            <!-- LEFT BLOCK: Brand Manifest & Core Philosophy (Takes 7 Cols for spacious luxury feeling) -->
-            <div class="lg:col-span-7 flex flex-col justify-between gap-10">
-              <div class="space-y-6">
-                <span
-                  class="font-primary text-xs tracking-[0.3em] uppercase text-[#faf5eb]/50 block"
-                  >Our Philosophy</span
-                >
-                <h2
-                  class="font-secondary text-[7vw] sm:text-[4vw] lg:text-[3.5vw] leading-[1.1] uppercase tracking-tight max-w-[90%]"
-                >
-                  Preserving memories <br />
-                  that last a
-                  <span class="text-[#faf5eb] font-normal">lifetime</span>.
-                </h2>
-              </div>
+      <!--  FOOTER -->
+      <footer id="footer-section" aria-label="Site footer"
+        class="w-full bg-brand">
 
-              <!-- Links Grid stacked beautifully below manifesto -->
-              <div class="grid grid-cols-2 gap-8 pt-6">
-                <!-- Column 1: Aligned Navigation Directory -->
-                <div class="space-y-4">
-                  <h4
-                    class="font-primary text-[11px] tracking-[0.2em] text-[#faf5eb]/40 uppercase font-bold"
-                  >
-                    Directory
-                  </h4>
-                  <ul
-                    class="font-secondary text-md space-y-2 uppercase tracking-wide"
-                  >
-                    <li>
-                      <a
-                        href="#hero-section"
-                        class="hover:text-[#faf5eb]/60 transition-colors duration-300 block"
-                        >Home</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#services-section"
-                        class="hover:text-[#faf5eb]/60 transition-colors duration-300 block"
-                        >Services</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#about-company"
-                        class="hover:text-[#faf5eb]/60 transition-colors duration-300 block"
-                        >About</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#gallery-section"
-                        class="hover:text-[#faf5eb]/60 transition-colors duration-300 block"
-                        >Gallery</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#portfolio"
-                        class="hover:text-[#faf5eb]/60 transition-colors duration-300 block"
-                        >Films</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#testimonials"
-                        class="hover:text-[#faf5eb]/60 transition-colors duration-300 block"
-                        >Testimonials</a
-                      >
-                    </li>
-                  </ul>
-                </div>
+        <!-- Top strip: brand + nav + contact -->
+        <div class="px-4 md:px-8 lg:px-16 pt-16 md:pt-20 pb-12 border-b border-surface/10">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
 
-                <!-- Column 2: Social Hub with Modern Floating Row Style -->
-                <div class="space-y-4">
-                  <h4
-                    class="font-primary text-[11px] tracking-[0.2em] text-[#faf5eb]/40 uppercase font-bold"
-                  >
-                    Connect
-                  </h4>
-                  <div class="flex flex-wrap gap-2">
-                    <a
-                      href="https://instagram.com"
-                      target="_blank"
-                      rel="noopener"
-                      aria-label="Instagram"
-                      class="w-10 h-10 rounded-full border border-[#faf5eb]/20 flex items-center justify-center hover:bg-[#faf5eb] hover:text-[#8c2923] transition-all duration-300"
-                    >
-                      <i class="ri-instagram-line text-lg"></i>
-                    </a>
-                    <a
-                      href="https://facebook.com"
-                      target="_blank"
-                      rel="noopener"
-                      aria-label="Facebook"
-                      class="w-10 h-10 rounded-full border border-[#faf5eb]/20 flex items-center justify-center hover:bg-[#faf5eb] hover:text-[#8c2923] transition-all duration-300"
-                    >
-                      <i class="ri-facebook-fill text-lg"></i>
-                    </a>
-                    <a
-                      href="https://x.com"
-                      target="_blank"
-                      rel="noopener"
-                      aria-label="Twitter"
-                      class="w-10 h-10 rounded-full border border-[#faf5eb]/20 flex items-center justify-center hover:bg-[#faf5eb] hover:text-[#8c2923] transition-all duration-300"
-                    >
-                      <i class="ri-twitter-x-fill text-base"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- RIGHT BLOCK: Premium Minimalist Invitation Card Layout (Takes 5 Cols) -->
-            <div
-              class="lg:col-span-5 flex flex-col justify-between p-8 sm:p-10 rounded-2xl border border-[#faf5eb]/10 bg-black/10 backdrop-blur-sm relative overflow-hidden"
-            >
-              <div class="space-y-4 relative z-10">
-                <span
-                  class="inline-block px-3 py-1 bg-[#faf5eb]/10 text-[#faf5eb] font-primary text-[10px] tracking-[0.2em] uppercase rounded-full"
-                >
-                  Booking 2026 / 27
-                </span>
-
-                <h3
-                  class="font-secondary text-2xl sm:text-3xl uppercase tracking-wide leading-tight"
-                >
-                  Your moments, captured forever.
-                </h3>
-
-                <p
-                  class="font-primary text-sm text-[#faf5eb]/60 leading-[22px]"
-                >
-                  Every smile, every glance, every celebration—documented with
-                  care and crafted into memories you'll cherish for a lifetime.
+            <!-- Brand block -->
+            <div class="lg:col-span-5 flex flex-col gap-6">
+              <div>
+                <span class="font-secondary text-large leading-large text-surface block tracking-wider">SR FILM</span>
+                <p class="font-primary text-sm text-surface/50 leading-md mt-2 uppercase max-w-xs">
+                  Wedding & destination photography studio guided by emotion and light. Pune, Maharashtra — Since 2018.
                 </p>
               </div>
 
-              <div class="mt-8 relative z-10">
-                <a
-                  href="https://wa.me/918767591139?text=Hi%20SR%20Film%20Photography,%20I%20am%20interested%20in%20booking%20a%20photography%20session.%20Could%20you%20please%20share%20more%20details%20about%20your%20packages%20and%20availability?"
-                  target="_blank"
-                  rel="noopener"
-                  class="inline-flex items-center justify-center uppercase text-[#faf5eb] rounded-[100px] px-[32px] py-[20px] bg-dark-red font-primary text-sm leading-sm whitespace-nowrap hover:bg-[#6b1f1a] transition-colors duration-300"
-                >
-                  Book Your Session
-                </a>
-              </div>
-
-              <!-- Subtle aesthetic grid decoration inside the card -->
-              <div
-                class="absolute -bottom-8 -right-8 w-32 h-32 bg-[#faf5eb]/5 rounded-full blur-2xl pointer-events-none"
-              ></div>
-            </div>
-          </div>
-
-          <!-- LOWER CONCLUDING META FRAME -->
-          <div class="pt-12 space-y-12">
-            <!-- Studio Offices Coordinates Row -->
-            <div
-              class="flex flex-col sm:flex-row gap-6 justify-between items-start sm:items-center font-primary text-xs tracking-widest text-[#faf5eb]/50 uppercase"
-            >
-              <div class="flex flex-wrap gap-x-8 gap-y-2">
-                <span
-                  ><strong class="text-[#faf5eb]/80">Mail:</strong>
-                  <a
-                    href="mailto:captionsunil2211@gmail.com"
-                    class="hover:text-[#faf5eb] transition-colors"
-                    >captionsunil2211@gmail.com</a
-                  ></span
-                >
-                <span
-                  ><strong class="text-[#faf5eb]/80">Call:</strong>
-                  <a
-                    href="tel:+918767591139"
-                    class="hover:text-[#faf5eb] transition-colors"
-                    >+91 87675 91139</a
-                  ></span
-                >
-              </div>
+              <!-- Socials -->
               <div>
-                <span> Pune, Maharashtra, India</span>
+                <p class="font-primary text-xsm tracking-[0.2em] uppercase text-surface/40 mb-3">Follow Us</p>
+                <div class="flex items-center gap-2">
+                  <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"
+                    class="w-10 h-10 rounded-full border border-surface/15 flex items-center justify-center text-surface/60 hover:bg-surface hover:text-brand transition-all duration-300">
+                    <i class="ri-instagram-line text-base"></i>
+                  </a>
+                  <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook"
+                    class="w-10 h-10 rounded-full border border-surface/15 flex items-center justify-center text-surface/60 hover:bg-surface hover:text-brand transition-all duration-300">
+                    <i class="ri-facebook-fill text-base"></i>
+                  </a>
+                  <a href="https://x.com" target="_blank" rel="noopener" aria-label="Twitter / X"
+                    class="w-10 h-10 rounded-full border border-surface/15 flex items-center justify-center text-surface/60 hover:bg-surface hover:text-brand transition-all duration-300">
+                    <i class="ri-twitter-x-fill text-sm"></i>
+                  </a>
+                  <a href="https://wa.me/918767591139" target="_blank" rel="noopener" aria-label="WhatsApp"
+                    class="w-10 h-10 rounded-full border border-surface/15 flex items-center justify-center text-surface/60 hover:bg-surface hover:text-brand transition-all duration-300">
+                    <i class="ri-whatsapp-line text-base"></i>
+                  </a>
+                </div>
               </div>
             </div>
 
-            <!-- Grand Aesthetic Brand Typo Block -->
-            <div
-              class="w-full select-none overflow-hidden py-4 border-y border-[#faf5eb]/5 my-4"
-            >
-              <h3
-                class="font-secondary text-center uppercase text-[20vw] leading-[17vw] text-[#faf5eb] font-bold opacity-[0.95]"
-              >
-                SR FILMS
-              </h3>
-            </div>
-
-            <!-- Legal Sub-footer Info -->
-            <div
-              class="flex flex-col md:flex-row justify-between items-center gap-4 font-primary text-[11px] tracking-widest uppercase text-[#faf5eb]/40"
-            >
-              <div>© 2026 SR FILMS. All rights reserved.</div>
-              <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2">
-                <li
-                  class="hover:text-[#faf5eb] cursor-pointer transition-colors"
-                >
-                  Privacy Policy
-                </li>
-                <li
-                  class="hover:text-[#faf5eb] cursor-pointer transition-colors"
-                >
-                  Terms of Service
-                </li>
-                <li class="tracking-normal text-[#faf5eb]/30">
-                  Crafted by
-                  <a
-                    href="#"
-                    class="hover:text-[#faf5eb] underline underline-offset-4 font-medium transition-colors"
-                    >Raino Studios</a
-                  >
-                </li>
+            <!-- Navigation -->
+            <nav class="lg:col-span-3" aria-label="Footer navigation">
+              <h3 class="font-primary text-xsm tracking-[0.2em] uppercase text-surface/40 font-semibold mb-5">Pages</h3>
+              <ul class="space-y-3 font-secondary text-md uppercase tracking-wide">
+                <li><a href="#hero-section" class="text-surface/70 hover:text-surface transition-colors duration-300 block">Home</a></li>
+                <li><a href="#services-section" class="text-surface/70 hover:text-surface transition-colors duration-300 block">Services</a></li>
+                <li><a href="#about-company" class="text-surface/70 hover:text-surface transition-colors duration-300 block">About</a></li>
+                <li><a href="#gallery-section" class="text-surface/70 hover:text-surface transition-colors duration-300 block">Gallery</a></li>
+                <li><a href="#portfolio" class="text-surface/70 hover:text-surface transition-colors duration-300 block">Films</a></li>
+                <li><a href="#testimonials" class="text-surface/70 hover:text-surface transition-colors duration-300 block">Testimonials</a></li>
               </ul>
-            </div>
+            </nav>
+
+            <!-- Contact -->
+            <address class="lg:col-span-4 not-italic flex flex-col gap-5">
+              <h3 class="font-primary text-xsm tracking-[0.2em] uppercase text-surface/40 font-semibold">Get In Touch</h3>
+
+              <div class="flex flex-col gap-4">
+                <a href="mailto:captionsunil2211@gmail.com"
+                  class="group flex items-start gap-3 text-surface/70 hover:text-surface transition-colors duration-300">
+                  <span class="w-9 h-9 rounded-full border border-surface/15 flex items-center justify-center shrink-0 group-hover:bg-surface group-hover:text-brand transition-all duration-300 mt-0.5">
+                    <i class="ri-mail-line text-sm"></i>
+                  </span>
+                  <div>
+                    <p class="font-primary text-xsm uppercase text-surface/30 mb-0.5 tracking-wider">Email</p>
+                    <p class="font-primary text-sm">captionsunil2211@gmail.com</p>
+                  </div>
+                </a>
+
+                <a href="tel:+918767591139"
+                  class="group flex items-start gap-3 text-surface/70 hover:text-surface transition-colors duration-300">
+                  <span class="w-9 h-9 rounded-full border border-surface/15 flex items-center justify-center shrink-0 group-hover:bg-surface group-hover:text-brand transition-all duration-300 mt-0.5">
+                    <i class="ri-phone-line text-sm"></i>
+                  </span>
+                  <div>
+                    <p class="font-primary text-xsm uppercase text-surface/30 mb-0.5 tracking-wider">Phone</p>
+                    <p class="font-primary text-sm">+91 87675 91139</p>
+                  </div>
+                </a>
+
+                <div class="flex items-start gap-3 text-surface/70">
+                  <span class="w-9 h-9 rounded-full border border-surface/15 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="ri-map-pin-line text-sm"></i>
+                  </span>
+                  <div>
+                    <p class="font-primary text-xsm uppercase text-surface/30 mb-0.5 tracking-wider">Studio</p>
+                    <p class="font-primary text-sm">Pune, Maharashtra, India</p>
+                  </div>
+                </div>
+              </div>
+            </address>
           </div>
-        </footer>
-      </section>
+        </div>
+
+        <!-- Brand word mark -->
+        <div class="overflow-hidden select-none border-b border-surface/5">
+          <h2 class="font-secondary text-center uppercase text-[20vw] leading-[16vw] text-surface font-bold opacity-90 py-2">
+            SR FILMS
+          </h2>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="px-4 md:px-8 lg:px-16 py-6 flex flex-col md:flex-row justify-between items-center gap-4 font-primary text-xsm tracking-widest uppercase text-surface/30">
+          <p>© 2026 SR Films Photography. All rights reserved.</p>
+          <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <li><a href="#" class="hover:text-surface/70 transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-surface/70 transition-colors">Terms of Service</a></li>
+            <li class="tracking-normal text-surface/20">Crafted by <a href="#" class="hover:text-surface/60 underline underline-offset-4 font-medium transition-colors">Raino Studios</a></li>
+          </ul>
+        </div>
+      </footer>
+
     </div>
 
+    
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
     <script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
-
-    <script>
-      // Initialize Lenis
-      const lenis = new Lenis({
-        autoRaf: true,
-      });
-
-    
-       
-    </script>
-
-  <script>
-  window.addEventListener("load", () => {
-    const loaderTl = gsap.timeline({
-      onComplete: () => {
-        initHeroAnimation();
-      }
-    });
-
-   
-
-    // Slide out loader screen smoothly
-    loaderTl.to(".loader-wrapper", {
-      clipPath: "inset(0 0 100% 0)",
-      duration: 1.2,
-      ease: "power4.inOut"
-    }, "+=0.2");
-  });
-
-  function initHeroAnimation() {
-    // 1. Core Fix: Reveal hidden layout elements immediately before executing coordinates
-    gsap.set(".hero-left-panel", { autoAlpha: 1 });
-
-    const tl = gsap.timeline({
-      defaults: {
-        ease: "power3.out",
-        duration: 1,
-      },
-    });
-
-    // 👉 NAV
-    tl.from(".top-nav span, .top-nav div p", {
-      y: 20,
-      opacity: 0,
-      stagger: 0.08,
-    });
-
-    // 👉 HERO TITLE (Corrected to use clean container-based translation tracking)
-    tl.from(
-      ".hero-top-content h2",
-      {
-        y: 100,
-        opacity: 0,
-      },
-      "-=0.6",
-    );
-
-    // 👉 SUBTEXT
-    tl.from(
-      ".hero-top-content div span",
-      {
-        y: 15,
-        opacity: 0,
-        stagger: 0.05,
-      },
-      "-=0.6",
-    );
-
-    // 👉 MIDDLE TEXT (SplitText lines)
-    let split = SplitText.create(".hero-middle-content p", {
-      type: "lines",
-      mask: "lines",
-    });
-
-    tl.from(
-      split.lines,
-      {
-        y: 40,
-        opacity: 0,
-        stagger: 0.08,
-        duration: 1.2,
-        ease: "power4.out",
-      },
-      "-=0.7",
-    );
-
-    // 👉 BUTTON (Fixed Selector for the Anchor tag structure)
-    
-  }
-</script>
-
-    <script src="https://cdn.jsdelivr.net/npm/lucide@1.17.0/dist/umd/lucide.min.js"></script>
-    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
     <script src="./assets/js/swiper-init.js"></script>
 
     <script>
+      // Lenis smooth scroll
+      const lenis = new Lenis({ autoRaf: true });
+
+      // ── LOADER + HERO ENTRY ──
+      window.addEventListener("load", () => {
+        gsap.timeline({ onComplete: initHeroAnimation })
+          .to(".loader-wrapper", { clipPath: "inset(0 0 100% 0)", duration: 1.2, ease: "power4.inOut" }, "+=0.2");
+      });
+
+      function initHeroAnimation() {
+        gsap.set(".hero-left-panel", { autoAlpha: 1 });
+        const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1 } });
+
+        tl.from(".top-nav span, .top-nav div p", { y: 20, opacity: 0, stagger: 0.08 });
+        tl.from(".hero-top-content h1", { y: 100, opacity: 0 }, "-=0.6");
+        tl.from(".hero-top-content div span", { y: 15, opacity: 0, stagger: 0.05 }, "-=0.6");
+
+        const split = SplitText.create(".hero-middle-content p", { type: "lines", mask: "lines" });
+        tl.from(split.lines, { y: 40, opacity: 0, stagger: 0.08, duration: 1.2, ease: "power4.out" }, "-=0.7");
+       
+      }
+
+      // ── MENU ──
+      function openMenu() {
+  gsap.set("#menu", { display: "block", clipPath: "inset(0 0 100% 0)" });
+  // ✅ Remove the set() calls for spans/address — clearProps already cleared them
+
+  const tl = gsap.timeline();
+  tl.to("#menu", { clipPath: "inset(0 0 0% 0)", duration: 1.2, ease: "power4.inOut" });
+  tl.from("#menu .navigation-link a span", { y: 80, opacity: 0, stagger: 0.08, duration: 1, ease: "power4.out" }, "-=0.7");
+  tl.from("#menu address", { y: 30, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.7");
+}
+
+      function closeMenu() {
+  const tl = gsap.timeline({
+    onComplete: () => {
+      gsap.set("#menu", { display: "none" });
+      // ✅ Clear all inline GSAP styles so openMenu starts fresh
+      gsap.set("#menu .navigation-link a span", { clearProps: "all" });
+      gsap.set("#menu address", { clearProps: "all" });
+    }
+  });
+
+  tl.to("#menu .navigation-link a span", { y: -40, opacity: 0, stagger: 0.04, duration: 0.4, ease: "power2.in" });
+  tl.to("#menu address", { opacity: 0, y: -20, duration: 0.3 }, "-=0.3");
+  tl.to("#menu", { clipPath: "inset(0 0 100% 0)", duration: 1, ease: "power4.inOut" }, "-=0.2");
+}
+
+      // ── ICONS ──
       lucide.createIcons();
     </script>
 
-    <script>
-      const footerTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".footer-big-text",
-          start: "top 80%",
-          end: "50% 70%",
-          // markers:true,
-          scrub: 2,
-        },
-      });
-
-      footerTl
-        .from(
-          ".footer-big-text span:first-child",
-          {
-            xPercent: -20,
-            opacity: 0,
-            filter: "blur(10px)",
-            duration: 1.8,
-            ease: "expo.out",
-          },
-          "n",
-        )
-        .from(
-          ".footer-big-text span:last-child",
-          {
-            xPercent: 20,
-            opacity: 0,
-            filter: "blur(10px)",
-            duration: 1.8,
-            ease: "expo.out",
-          },
-          "n",
-        );
-    </script>
-
-    <script>
-      function openMenu() {
-        // 1. Initial State Setup
-        gsap.set("#menu", {
-          display: "block",
-          clipPath: "inset(0 0 100% 0)",
-        });
-
-        // Elements reset (Only inside #menu)
-        gsap.set("#menu .navigation-link a div", { y: "0%", opacity: 1 });
-        gsap.set("#menu .navigation-link a span", { opacity: 1 });
-        // Menu ke andar ka contact section reset
-        gsap.set("#menu .navigation-link + div, #menu .flex.font-primary", {
-          y: 0,
-          opacity: 1,
-        });
-
-        const tl = gsap.timeline();
-
-        // 2. Menu Slide Down Animation
-        tl.to("#menu", {
-          clipPath: "inset(0 0 0% 0)",
-          duration: 1.2,
-          ease: "power4.inOut",
-        });
-
-        // 3. Links Slide-In Animation (Scoped inside #menu)
-        tl.from(
-          "#menu .navigation-link a div",
-          {
-            y: 80,
-            opacity: 0,
-            stagger: 0.08,
-            duration: 1,
-            ease: "power4.out",
-          },
-          "-=0.7",
-        );
-
-        // 4. Contact Block Fade-In (Strictly Scoped inside #menu)
-        tl.from(
-          "#menu .navigation-link + div, #menu .flex.font-primary",
-          {
-            y: 30,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power3.out",
-          },
-          "-=0.7",
-        );
-
-        // 5. Category Image Scale Down Accent
-        tl.from(
-          "#menu .col-span-1.md:col-span-6 img",
-          {
-            scale: 1.15,
-            opacity: 0,
-            duration: 1.4,
-            ease: "power3.out",
-          },
-          "-=1",
-        );
-      }
-
-      function closeMenu() {
-        const tl = gsap.timeline({
-          onComplete: () => {
-            gsap.set("#menu", { display: "none" });
-          },
-        });
-
-        // Links structural slide up (Scoped inside #menu)
-        tl.to("#menu .navigation-link a div", {
-          y: -40,
-          opacity: 0,
-          stagger: 0.04,
-          duration: 0.4,
-          ease: "power2.in",
-        });
-
-        // Contact layout wrap fade (Strictly Scoped inside #menu so Footer doesn't break)
-        tl.to(
-          "#menu .navigation-link + div, #menu .flex.font-primary",
-          {
-            opacity: 0,
-            y: -20,
-            duration: 0.3,
-          },
-          "-=0.3",
-        );
-
-        // Clip path slide up
-        tl.to(
-          "#menu",
-          {
-            clipPath: "inset(0 0 100% 0)",
-            duration: 1,
-            ease: "power4.inOut",
-          },
-          "-=0.2",
-        );
-      }
-    </script>
   </body>
 </html>
