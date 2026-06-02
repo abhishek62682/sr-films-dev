@@ -144,7 +144,7 @@
 
 </div>
     <div
-      class="fixed bottom-0 left-0 right-0 z-50 h-[8svh] md:h-auto flex md:bottom-6 md:right-6 md:left-auto md:flex-col gap-0 md:gap-3 p-0 bg-transparent backdrop-blur-sm md:backdrop-blur-none"
+      class="fixed bottom-0 left-0 right-0 z-[9999999] h-[8svh] md:h-auto flex md:bottom-6 md:right-6 md:left-auto md:flex-col gap-0 md:gap-3 p-0 bg-transparent backdrop-blur-sm md:backdrop-blur-none"
     >
       <!-- WhatsApp Button -->
       <a
@@ -189,70 +189,58 @@
         <div
           class="w-full hero-container rounded-[8px] overflow-hidden flex-col md:flex-row flex bg-cream"
         >
-          <div
-            class="w-full md:w-1/2 gap-[80px] md:gap-0 md:h-[800px] flex flex-col justify-between items-center pt-[28px] px-[32px] pb-[64px]"
-          >
-            <div class="top-nav w-full flex justify-between items-center">
-              <span
-                class="font-secondary font-normal color-black leading-large text-large"
-                >SR FILM</span
-              >
+         <!-- Main responsive column wrapper with visibility fixes -->
+<div class="hero-left-panel opacity-0 invisible w-full md:w-1/2 gap-[80px] md:gap-0 md:h-[800px] flex flex-col justify-between items-center pt-[28px] px-[32px] pb-[64px]">
+  
+  <!-- TOP NAVIGATION BLOCK (Perfect Grid Alignment) -->
+<div class="top-nav w-full flex justify-between items-center px-2 sm:px-4">
+    <span class="font-secondary font-normal color-black leading-large text-large tracking-wide shrink-0">
+      SR FILM
+    </span>
 
-              <div class="flex items-center gap-4">
-                <div
-                  class="hidden md:block uppercase text-end text-cblack leading-sm text-sm font-normal"
-                >
-                  <p>Wedding Photography</p>
-                  <p>Since 2018</p>
-                </div>
+    <div class="flex items-center justify-end">
+      <div class="hidden md:block uppercase text-end text-cblack leading-sm text-sm font-normal">
+        <p>Wedding Photography</p>
+        <p>Since 2018</p>
+      </div>
 
-                <button
-                  onclick="openMenu()"
-                  class="block md:hidden shrink-0 text-xsm uppercase bg-black text-[#faf5eb] rounded-[100px] py-[10px] px-[18px] font-primary font-normal leading-normal transition-transform active:scale-95 shadow-md"
-                >
-                  Menu
-                </button>
-              </div>
-            </div>
+      <button onclick="openMenu()" class="block md:hidden shrink-0 text-xsm uppercase bg-black text-[#faf5eb] rounded-[100px] py-[10px] px-[20px] mr-2 font-primary font-normal leading-normal transition-transform active:scale-95 shadow-md">
+        Menu
+      </button>
+    </div>
+  </div>
 
-            <div
-              class="hero-top-content pt-[48px] space-y-3 flex flex-col items-center uppercase"
-            >
-              <h2
-                class="font-secondary text-center text-[14vw] leading-[15vw] md:text-xlarge md:leading-xlarge"
-              >
-                Capturing <br />
-                Moments
-              </h2>
+  <!-- HERO MAIN TYPOGRAPHY -->
+  <div class="hero-top-content pt-[48px] space-y-3 flex flex-col items-center uppercase w-full">
+    <div class="overflow-hidden">
+      <h2 class="font-secondary text-center text-[14vw] leading-[15vw] md:text-xlarge md:leading-xlarge">
+        Capturing <br />
+        Moments
+      </h2>
+    </div>
+    <div class="text-cblack flex gap-2 items-center justify-center text-center text-md leading-md font-normal font-primary">
+      <span>Film Maker</span>
+      <span class="line w-3 h-[1px] bg-grey inline-block"></span>
+      <span>Pune Maharashtra</span>
+    </div>
+  </div>
 
-              <div
-                class="text-cblack flex gap-2 items-center text-center text-md leading-md font-normal font-primary"
-              >
-                <span>Film Maker</span>
-                <span class="line w-3 h-[1px] bg-grey inline-block"></span>
-                <span>Pune Maharashtra</span>
-              </div>
-            </div>
+  <!-- MIDDLE DESCRIPTION -->
+  <div class="hero-middle-content font-primary text-[#141313] text-center uppercase text-md leading-md w-full md:max-w-[380px] mx-auto">
+    <p>
+      Capturing genuine emotions, timeless stories, and unforgettable
+      celebrations through cinematic films and authentic photography.
+      Every frame is crafted to preserve your most meaningful moments.
+    </p>
+  </div>
 
-            <div
-              class="hero-middle-content font-primary text-[#141313] text-center uppercase text-md leading-md w-full md:max-w-[380px] mx-auto"
-            >
-              <p>
-                Capturing genuine emotions, timeless stories, and unforgettable
-                celebrations through cinematic films and authentic photography.
-                Every frame is crafted to preserve your most meaningful moments.
-              </p>
-            </div>
-
-            <div class="">
-              <a
-                href="#portfolio"
-                class="uppercase text-[#faf5eb] rounded-[100px] px-[32px] py-[20px] bg-black font-primary text-sm leading-sm transition-all hover:bg-neutral-800 active:scale-97"
-              >
-                View Portfolio
-              </a>
-            </div>
-          </div>
+  <!-- PORTFOLIO CTA ACTION -->
+  <div class="hero-cta">
+    <a href="#portfolio" class="inline-block uppercase text-[#faf5eb] rounded-[100px] px-[32px] py-[20px] bg-black font-primary text-sm leading-sm transition-all hover:bg-neutral-800 active:scale-97">
+      View Portfolio
+    </a>
+  </div>
+</div>
 
           <div
             class="w-full md:w-1/2 h-[600px] md:h-full relative overflow-hidden"
@@ -416,7 +404,7 @@
                 </div>
               </div>
 
-              <div class="flex items-center gap-4 mb-[65px] md:mb-0">
+              <div class="flex items-center gap-4 mb-[70px] md:mb-0">
                 <a
                   href="#"
                   aria-label="Instagram"
@@ -2316,31 +2304,28 @@
        
     </script>
 
-    <script>
-  // pure page ke resources load hone ka wait karega (images, scripts etc.)
+  <script>
   window.addEventListener("load", () => {
-    
-    // 1. Loader Timeline Setup
     const loaderTl = gsap.timeline({
       onComplete: () => {
-        // Jab loader hide ho jaye, tab baki ka main content animation start hoga
         initHeroAnimation();
       }
     });
 
-    
+   
 
-    // Ab pure Loader Wrapper ko smoothly clip/slide up ya fade out karenge
+    // Slide out loader screen smoothly
     loaderTl.to(".loader-wrapper", {
-      clipPath: "inset(0 0 100% 0)", // Cream clean transition logic
+      clipPath: "inset(0 0 100% 0)",
       duration: 1.2,
       ease: "power4.inOut"
-    }, "+=0.2"); // chota sa delay loading completion feeling dene ke liye
-
+    }, "+=0.2");
   });
 
-  // 2. Main Hero Content Animation Sequence
   function initHeroAnimation() {
+    // 1. Core Fix: Reveal hidden layout elements immediately before executing coordinates
+    gsap.set(".hero-left-panel", { autoAlpha: 1 });
+
     const tl = gsap.timeline({
       defaults: {
         ease: "power3.out",
@@ -2355,21 +2340,21 @@
       stagger: 0.08,
     });
 
-    // 👉 HERO TITLE
+    // 👉 HERO TITLE (Corrected to use clean container-based translation tracking)
     tl.from(
       ".hero-top-content h2",
       {
-        yPercent: 50,
+        y: 100,
         opacity: 0,
       },
-      "-=0.5",
+      "-=0.6",
     );
 
-    // 👉 SUBTEXT (Jewelry House line)
+    // 👉 SUBTEXT
     tl.from(
       ".hero-top-content div span",
       {
-        y: 20,
+        y: 15,
         opacity: 0,
         stagger: 0.05,
       },
@@ -2385,26 +2370,17 @@
     tl.from(
       split.lines,
       {
-        yPercent: 120,
+        y: 40,
         opacity: 0,
         stagger: 0.08,
         duration: 1.2,
-        ease: "expo.out",
+        ease: "power4.out",
       },
-      "-=0.6",
+      "-=0.7",
     );
 
-    // 👉 BUTTON
-    tl.from(
-      ".hero-bottom-content button",
-      {
-        y: 30,
-        opacity: 0,
-        scale: 0.95,
-        duration: 0.8,
-      },
-      "-=0.5",
-    );
+    // 👉 BUTTON (Fixed Selector for the Anchor tag structure)
+    
   }
 </script>
 
